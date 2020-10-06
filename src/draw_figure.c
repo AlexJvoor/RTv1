@@ -6,15 +6,15 @@
 
 t_vec3		eye_trace(int x, int y, t_cam *cam)
 {
-	return (vec3_normalize(vec3_minus((t_vec3){(x) * (1.0 / WIDTH),
-				(y) * (1.0 / HEIGHT), 1.0}, cam->pos)));
+	return (vec3_normalize(vec3_minus((t_vec3){(x) * (VX),
+				(y) * (VY), 1.0}, cam->pos)));
 }
 
 void		draw_figure(int x, int y, t_data *data)
 {
 	t_list		*tmp;
 	t_vec3		d;
-	t_vec2		res;
+	float		res;
 
 	data->cam.pos.x = 0;
 	data->cam.pos.y = 0;
@@ -25,11 +25,7 @@ void		draw_figure(int x, int y, t_data *data)
 	while (tmp)
 	{
 		res = data->find_destination[(*(t_obj **)tmp->content)->type](data, *(t_obj **)tmp->content, &d);
-		if (res.x > 1 && res.x < INFINITY)
-		{
-			data->mlx.data[x + WIDTH / 2 + (y + HEIGHT / 2) * WIDTH] = 0x00FF00FF;
-		}
-		if (res.y > 1 && res.y < INFINITY)
+		if (res > 1 && res < INFINITY)
 		{
 			data->mlx.data[x + WIDTH / 2 + (y + HEIGHT / 2) * WIDTH] = 0x00FF00FF;
 		}
@@ -37,20 +33,3 @@ void		draw_figure(int x, int y, t_data *data)
 	}
 }
 
-void		update_screen(t_data *data)
-{
-	int		x;
-	int		y;
-
-	y = -HEIGHT / 2;
-	while (y < HEIGHT / 2)
-	{
-		x = -WIDTH / 2;
-		while (x < WIDTH / 2)
-		{
-			draw_figure(x, y, data);
-			x++;
-		}
-		y++;
-	}
-}

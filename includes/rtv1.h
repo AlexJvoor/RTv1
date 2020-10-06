@@ -8,7 +8,10 @@
 
 #define WIDTH 1000
 #define HEIGHT 1000
-
+#define VX 1.0 / WIDTH 
+#define VY 1.0 / HEIGHT
+#define H_HEIGHT HEIGHT / 2
+#define H_WIGHT WIDTH / 2
 
 #define FOV 1,0472// == rads 60 | 1,5708 == rads 90
 
@@ -115,7 +118,7 @@ typedef struct	s_data
 	t_light		*light;
 	t_list		*objs;
 	t_cam		cam;
-	t_vec2		(*find_destination[4])(struct s_data *, t_obj *, t_vec3 *);
+	float		(*find_destination[4])(struct s_data *, t_obj *, t_vec3 *);
 	t_mlx		mlx;
 }				t_data;
 
@@ -170,10 +173,10 @@ t_mlx	init_mlx();
 **		figure cast formulas
 */
 
-t_vec2		sphere_cast(t_data *data, t_obj *obj, t_vec3 *d);
-t_vec2		cone_cast(t_data *data, t_obj *obj, t_vec3 *d);
-t_vec2		plane_cast(t_data *data, t_obj *obj, t_vec3 *d);
-t_vec2		cylinder_cast(t_data *data, t_obj *obj, t_vec3 *d);
+float		sphere_cast(t_data *data, t_obj *obj, t_vec3 *d);
+float		cone_cast(t_data *data, t_obj *obj, t_vec3 *d);
+float		plane_cast(t_data *data, t_obj *obj, t_vec3 *d);
+float		cylinder_cast(t_data *data, t_obj *obj, t_vec3 *d);
 
 /*
 **		draw loop

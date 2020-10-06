@@ -13,7 +13,8 @@ SRCS = main.c \
        safe_call.c \
        init_data.c \
        draw_figure.c \
-       figure_cast_formulas.c
+       figure_cast_formulas.c \
+	   update_screen.c
 
 PARSE_SRC = parse.c \
             tools.c \

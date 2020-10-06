@@ -4,7 +4,7 @@
 
 #include "rtv1.h"
 
-t_vec2		sphere_cast(t_data *data, t_obj *obj, t_vec3 *d)
+float		sphere_cast(t_data *data, t_obj *obj, t_vec3 *d)
 {
 	t_vec3	c = ((t_sphere *)obj)->coords;
 	float	r = ((t_sphere *)obj)->rad;
@@ -15,23 +15,23 @@ t_vec2		sphere_cast(t_data *data, t_obj *obj, t_vec3 *d)
 	float k3 = vec3_dot(oc, oc) - r*r;
 	float discriminant = k2*k2 - 4*k1*k3;
 	if (discriminant < 0)
-		return (t_vec2){INFINITY, INFINITY};
+		return (INFINITY);
 	float t1 = (-k2 + sqrt(discriminant)) / (2*k1);
 	float t2 = (-k2 - sqrt(discriminant)) / (2*k1);
-	return (t_vec2){t1, t2};
+	return (t1 < t2 ? t1 : t2);
 }
 
-t_vec2		cone_cast(t_data *data, t_obj *obj, t_vec3 *d)
+float		cone_cast(t_data *data, t_obj *obj, t_vec3 *d)
 {
-	return ((t_vec2){-1, -1});
+	return (INFINITY);
 }
 
-t_vec2		plane_cast(t_data *data, t_obj *obj, t_vec3 *d)
+float		plane_cast(t_data *data, t_obj *obj, t_vec3 *d)
 {
-	return ((t_vec2){-1, -1});
+	return (INFINITY);
 }
 
-t_vec2		cylinder_cast(t_data *data, t_obj *obj, t_vec3 *d)
+float		cylinder_cast(t_data *data, t_obj *obj, t_vec3 *d)
 {
-	return ((t_vec2){-1, -1});
+	return (INFINITY);
 }
