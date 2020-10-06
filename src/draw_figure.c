@@ -10,26 +10,48 @@ t_vec3		eye_trace(int x, int y, t_cam *cam)
 				(y) * (VY), 1.0}, cam->pos)));
 }
 
+//TODO: incorrect num!
+int			vec3_to_color(t_vec3 vec)
+{
+	t_vec3		res_vec;
+	int			color;
+
+	res_vec = vec3_mult_num(vec, 255);
+	color = 0 << 24 | (int)res_vec.x << 16 | (int)res_vec.y << 8 | (int)res_vec.z;
+	return (color);
+}
+
 void		draw_figure(int x, int y, t_data *data)
 {
 	t_list		*tmp;
 	t_vec3		d;
-	float		res;
+	float		dist;
+	float		min_dist;
+	t_obj		*obj;
 
 	data->cam.pos.x = 0;
 	data->cam.pos.y = 0;
 	data->cam.pos.z = 0;
 
-	d = eye_trace(x, y, &data->cam);
+	min_dist = INFINITY;
+	d = eye_trace(x, y, &data->cam);//o + t * vec(d)
 	tmp = data->objs;
 	while (tmp)
 	{
-		res = data->find_destination[(*(t_obj **)tmp->content)->type](data, *(t_obj **)tmp->content, &d);
-		if (res > 1 && res < INFINITY)
+		dist = data->find_destination[(*(t_obj **)tmp->content)->type](data, *(t_obj **)tmp->content, &d);
+		if (dist > 1 && dist < INFINITY)
 		{
-			data->mlx.data[x + WIDTH / 2 + (y + HEIGHT / 2) * WIDTH] = 0x00FF00FF;
+			if (dist < min_dist)
+			{
+				min_dist = dist;
+				obj = *(t_obj **)tmp->content;
+			}
 		}
 		tmp = tmp->next;
+	}
+	if (min_dist != INFINITY)
+	{
+		data->mlx.data[x + H_WIDTH + (y + H_HEIGHT) * WIDTH] = vec3_to_color(obj->color);
 	}
 }
 

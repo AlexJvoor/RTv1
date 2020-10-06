@@ -82,6 +82,7 @@ int		parse_sphere(t_data *data, t_parse *parse)
 {
 	t_sphere	*sphere;
 	char	*str;
+	static int	col = 0;
 
 	safe_call_int_parse(check_line("sphere", parse->gnl_str),
 						"sphere data is wrong: \"src/parse/figure.c\"", data, parse);
@@ -110,6 +111,19 @@ int		parse_sphere(t_data *data, t_parse *parse)
 		ft_strdel(&parse->gnl_str);
 	}
 	sphere->type = SPHERE;
+	if (col == 0)
+	{
+		sphere->color = (t_vec3){1.0, 0.0, 0.0};
+	}
+	if (col == 1)
+	{
+		sphere->color = (t_vec3){0.0, 1.0, 0.0};
+	}
+	if (col == 2)
+	{
+		sphere->color = (t_vec3){0.0, 0.0, 1.0};
+	}
+	col++;
 	printf("radius: %f\n",
 		   sphere->rad);
 	parse->curr_obj->next = ft_lstnew((&sphere), sizeof(t_sphere *));

@@ -8,8 +8,8 @@ void		update_screen(t_data *data)
 	y = -H_HEIGHT;
 	while (y < H_HEIGHT)
 	{
-		x = -H_WIGHT;
-		while (x < H_WIGHT)//TODO define HEIGHT / 2 && WIDTH /
+		x = -H_WIDTH;
+		while (x < H_WIDTH)//TODO define HEIGHT / 2 && WIDTH /
 		{
 			draw_figure(x, y, data);
 			x++;

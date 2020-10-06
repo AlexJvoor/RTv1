@@ -11,7 +11,7 @@
 #define VX 1.0 / WIDTH 
 #define VY 1.0 / HEIGHT
 #define H_HEIGHT HEIGHT / 2
-#define H_WIGHT WIDTH / 2
+#define H_WIDTH WIDTH / 2
 
 #define FOV 1,0472// == rads 60 | 1,5708 == rads 90
 
@@ -29,7 +29,7 @@ typedef enum	e_type
 typedef struct  s_plane
 {
 	int8_t		type;
-	t_vec3		color;
+	t_vec3		color;//TODO: parse colors
     t_vec3      coords;//произв точка на пл-ти
 	t_vec3		norm;//нормаль к плоскости
     float       dist;//кратчайшее расстояние до плоскости
@@ -100,6 +100,7 @@ typedef struct	s_cam
 typedef struct	s_obj
 {
 	int8_t		type;
+	t_vec3		color;
 }				t_obj;
 
 typedef struct	s_mlx
