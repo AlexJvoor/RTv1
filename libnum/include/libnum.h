@@ -137,6 +137,7 @@ t_vec3				vec3_div(t_vec3 a, t_vec3 b);
 t_vec3				vec3_sqr(t_vec3 a);
 
 /*
+ *
 ** vec3__2.c
 */
 

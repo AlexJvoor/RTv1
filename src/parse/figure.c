@@ -58,7 +58,8 @@ int		parse_plane(t_data *data, t_parse *parse)
 		{
 			str = safe_call_ptr_parse(skip_to("coordinates", str),
 				"Parser failed: coordinates are wrong - \"src/parse/tools.c\"", data, parse);
-			parse_vec3(str, &plane->coords, data, parse);
+//			parse_vec3(str, &plane->coords, data, parse);
+			parse_vec3(str, &plane->norm, data, parse);
 		}
 		else if (*str == 'd')
 		{

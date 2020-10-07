@@ -23,9 +23,14 @@ void			check_data(t_data *data)
 		}
 		if ((*(t_obj **)lst->content)->type == PLANE)
 		{
+//			printf("Type: plane\ncoordinates: %f, %f, %f\ndistance: %f\n\n",
+//				   (*(t_plane **)lst->content)->coords.x, (*(t_plane **)lst->content)->coords.y,
+//				   (*(t_plane **)lst->content)->coords.z, (*(t_plane **)lst->content)->dist);
+
 			printf("Type: plane\ncoordinates: %f, %f, %f\ndistance: %f\n\n",
-				   (*(t_plane **)lst->content)->coords.x, (*(t_plane **)lst->content)->coords.y,
-				   (*(t_plane **)lst->content)->coords.z, (*(t_plane **)lst->content)->dist);
+				   (*(t_plane **)lst->content)->norm.x, (*(t_plane **)lst->content)->norm.y,
+				   (*(t_plane **)lst->content)->norm.z, (*(t_plane **)lst->content)->dist);
+
 		}
 		if ((*(t_obj **)lst->content)->type == CONE)
 		{
@@ -66,7 +71,7 @@ static void		end_parse(t_data *data, t_parse *parse)
 	t_list	*tmp;
 
 	safe_call_int_parse(parse->gnl_flag, "Read error: gnl returned -1.", data, parse);
-	remove_parse(parse);
+//	remove_parse(parse);
 	tmp = data->objs;
 	data->objs = data->objs->next;
 	ft_memdel((void **)&tmp);
@@ -88,7 +93,7 @@ static void		parse_file(int fd, t_data *data)
 		else if (*parse.gnl_str == 'l')
 			parse_light(data, &parse);
 		else if (*parse.gnl_str == 'p')
-			parse_plane(data, &parse);
+            parse_plane(data, &parse);
 		else if (*parse.gnl_str == 's')
 		{
 			parse_sphere(data, &parse);

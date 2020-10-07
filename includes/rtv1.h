@@ -30,9 +30,9 @@ typedef struct  s_plane
 {
 	int8_t		type;
 	t_vec3		color;//TODO: parse colors
-    t_vec3      coords;//произв точка на пл-ти
+//    t_vec3      coords;//произв точка на пл-ти
 	t_vec3		norm;//нормаль к плоскости
-    float       dist;//кратчайшее расстояние до плоскости
+    t_num       dist;//кратчайшее расстояние до плоскости
 }				t_plane;
 
 typedef struct  s_sphere
