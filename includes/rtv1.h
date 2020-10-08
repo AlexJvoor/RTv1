@@ -123,6 +123,7 @@ typedef struct	s_data
 	t_list		*objs;
 	t_cam		cam;
 	float		(*find_destination[OBJ_COUNT])(struct s_data *, t_obj *, t_vec3 *);
+	t_vec3		(*find_normal[OBJ_COUNT])(t_obj *, t_vec3 *d, t_vec3 p);
 	t_mlx		mlx;
 }				t_data;
 
@@ -186,6 +187,16 @@ float		sphere_cast(t_data *data, t_obj *obj, t_vec3 *d);
 float		cone_cast(t_data *data, t_obj *obj, t_vec3 *d);
 float		plane_cast(t_data *data, t_obj *obj, t_vec3 *d);
 float		cylinder_cast(t_data *data, t_obj *obj, t_vec3 *d);
+
+/*
+**		figure_normals.c
+*/
+
+t_vec3		sphere_normal(t_obj *obj, t_vec3 *d, t_vec3 p);
+t_vec3		plane_normal(t_obj *obj, t_vec3 *d, t_vec3 p);
+t_vec3		cone_normal(t_obj *obj, t_vec3 *d, t_vec3 p);
+t_vec3		cylinder_normal(t_obj *obj, t_vec3 *d, t_vec3 p);
+
 
 /*
 **		draw loop

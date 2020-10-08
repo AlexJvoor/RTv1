@@ -20,7 +20,11 @@ void			init_data(t_data *data)
 {
 	data->mlx = init_mlx();
 	data->find_destination[SPHERE] = &sphere_cast;
+	data->find_normal[SPHERE] = &sphere_normal;
 	data->find_destination[PLANE] = &plane_cast;
+	data->find_normal[PLANE] = &plane_normal;
 	data->find_destination[CONE] = &cone_cast;
+	data->find_normal[CONE] = &cone_normal;
 	data->find_destination[CYLINDER] = &cylinder_cast;
+	data->find_normal[CYLINDER] = &cylinder_normal;
 }

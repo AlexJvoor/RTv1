@@ -28,7 +28,6 @@ float		cone_cast(t_data *data, t_obj *obj, t_vec3 *d)
 
 float		plane_cast(t_data *data, t_obj *obj, t_vec3 *d_old)
 {
-//	printf("-\n");
 	t_vec3 d = vec3_normalize(*d_old);
     t_plane *pl = (t_plane *)obj;
     t_vec3 n = vec3_normalize(pl->norm);
@@ -42,18 +41,8 @@ float		plane_cast(t_data *data, t_obj *obj, t_vec3 *d_old)
 	}
     else
 	{
-//		printf("-\n");
 	}
 	float t = vec3_dot(vec3_invert(x), n) / dv * (-1);
-
-//    if (t < 0)
-//	{
-////		printf("< 0\n");
-//	}
-//    else
-//	{
-//		printf("> 0\n");
-//	}
 	return (t);
 }
 

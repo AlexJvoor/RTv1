@@ -17,6 +17,12 @@ int			vec3_to_color(t_vec3 vec)
 	int			color;
 
 	res_vec = vec3_mult_num(vec, 255);
+	res_vec.x = res_vec.x > 255 ? 255 : res_vec.x;
+	res_vec.y = res_vec.y > 255 ? 255 : res_vec.y;
+	res_vec.z = res_vec.z > 255 ? 255 : res_vec.z;
+	res_vec.x = res_vec.x < 0 ? 0 : res_vec.x;
+	res_vec.y = res_vec.y < 0 ? 0 : res_vec.y;
+	res_vec.z = res_vec.z < 0 ? 0 : res_vec.z;
 	color = 0 << 24 | (int)res_vec.x << 16 | (int)res_vec.y << 8 | (int)res_vec.z;
 	return (color);
 }
@@ -28,6 +34,9 @@ void		draw_figure(int x, int y, t_data *data)
 	float		dist;
 	float		min_dist;
 	t_obj		*obj;
+	t_vec3		l;
+	t_vec3		p;
+	t_vec3		normal;
 
 	/**
 	**		camera is parsed, sooo we don't need this
@@ -37,6 +46,7 @@ void		draw_figure(int x, int y, t_data *data)
 //	data->cam.pos.y = 0;
 //	data->cam.pos.z = 0;
 
+//	l = от p до источника света
 	min_dist = INFINITY;
 	d = eye_trace(x, y, &data->cam);//o + t * vec(d)
 	tmp = data->objs;
@@ -57,7 +67,18 @@ void		draw_figure(int x, int y, t_data *data)
 	}
 	if (min_dist != INFINITY)
 	{
-		data->mlx.data[x + H_WIDTH + (y + H_HEIGHT) * WIDTH] = vec3_to_color(obj->color);
+		p = vec3_plus(vec3_mult_num(d, min_dist), data->cam.pos);
+		l = vec3_minus(p, data->light->coord);
+		normal = data->find_normal[obj->type](obj, &d, p);
+		float light_intence = vec3_dot(vec3_normalize(l), normal) / (vec3_len(normal) * vec3_len(l));
+//		light_intence += 0.5;
+		data->mlx.data[x + H_WIDTH + (y + H_HEIGHT) * WIDTH] = vec3_to_color(vec3_mult_num(obj->color, light_intence));
+
+//		printf("%f\n", light_intence);
+//		float light_intence = vec3_normalize(l) * normal / (|l| * |normal|);
+//		color_res = light_intence * obj_color;
+//
+//		data->mlx.data[x + H_WIDTH + (y + H_HEIGHT) * WIDTH] = vec3_to_color(obj->color);
 	}
 	if (min_dist != INFINITY)
 	{
