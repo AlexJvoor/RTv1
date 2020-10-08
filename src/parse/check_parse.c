@@ -34,10 +34,14 @@ void			check_data(t_data *data)
 //				   (*(t_plane **)lst->content)->coords.z, (*(t_plane **)lst->content)->dist);
 			printf("Type: plane\n"
 			"coordinates: %f, %f, %f\n"
+			"color: %f, %f, %f\n"
 			"distance: %f\n\n",
 			(*(t_plane **)lst->content)->norm.x,
 			(*(t_plane **)lst->content)->norm.y,
 			(*(t_plane **)lst->content)->norm.z,
+				   (*(t_plane **)lst->content)->color.x,
+				   (*(t_plane **)lst->content)->color.y,
+				   (*(t_plane **)lst->content)->color.z,
 			(*(t_plane **)lst->content)->dist);
 		}
 		if ((*(t_obj **)lst->content)->type == CONE)

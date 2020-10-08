@@ -49,7 +49,7 @@ char		*get_second_num(char *str, float *box)
 		return (NULL);
 	str[i] = '\0';
 	res = ft_atoi(str);
-	while (res > 1)
+	while (res >= 1)
 		res /= 10.0;
 	*box += res;
 	str += i + flag;

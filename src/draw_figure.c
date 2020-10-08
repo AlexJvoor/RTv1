@@ -10,42 +10,23 @@ t_vec3		eye_trace(int x, int y, t_cam *cam)
 				(y) * (VY), 1.0}, cam->pos)));
 }
 
-int			vec3_to_color(t_vec3 vec)
-{
-	t_vec3		res_vec;
-	int			color;
-
-	res_vec = vec3_mult_num(vec, 255);
-	res_vec.x = res_vec.x > 255 ? 255 : res_vec.x;
-	res_vec.y = res_vec.y > 255 ? 255 : res_vec.y;
-	res_vec.z = res_vec.z > 255 ? 255 : res_vec.z;
-	res_vec.x = res_vec.x < 0 ? 0 : res_vec.x;
-	res_vec.y = res_vec.y < 0 ? 0 : res_vec.y;
-	res_vec.z = res_vec.z < 0 ? 0 : res_vec.z;
-	color = 0 << 24 | (int)res_vec.x << 16 | (int)res_vec.y << 8 | (int)res_vec.z;
-	return (color);
-}
-
-float		light_cast(t_data *data, t_obj *obj, float min_dist, t_vec3 d)
-{
-	t_vec3		l;
-	t_vec3		p;
-	t_vec3		normal;
-
-	p = vec3_plus(vec3_mult_num(d, min_dist), data->cam.pos);
-	l = vec3_minus(p, data->light->coord);
-	normal = data->find_normal[obj->type](obj, &d, p);
-	return (vec3_dot(vec3_normalize(l), normal) / (vec3_len(normal) * vec3_len(l)));
-}
-
 int			final_color(t_data *data, t_obj *obj, float min_dist, t_vec3 d)
 {
-	float		light_intence;
-	int			color_res;
+	t_light		*tmp;
+	t_vec3		color;
+	t_vec3		p;
 
-	light_intence = light_cast(data, obj, min_dist, d);
-	color_res = vec3_to_color(vec3_mult_num(obj->color, light_intence));
-	return (color_res);
+	tmp = data->light;
+	p = vec3_plus(vec3_mult_num(d, min_dist), data->cam.pos);
+	color.x = 0;
+	color.y = 0;
+	color.z = 0;
+	while (tmp)
+	{
+		color = vec3_plus(curr_color(obj, d, tmp, p), color);
+		tmp = tmp->next;
+	}
+	return (vec3_to_color(color));
 }
 
 void		draw_figure(int x, int y, t_data *data)
