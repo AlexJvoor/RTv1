@@ -10,7 +10,7 @@ t_vec3		eye_trace(int x, int y, t_cam *cam)
 				(y) * (VY), 1.0}, cam->pos)));
 }
 
-//TODO: incorrect num!
+//TODO: incorrect num!... or correct?
 int			vec3_to_color(t_vec3 vec)
 {
 	t_vec3		res_vec;
@@ -29,15 +29,21 @@ void		draw_figure(int x, int y, t_data *data)
 	float		min_dist;
 	t_obj		*obj;
 
-	data->cam.pos.x = 0;
-	data->cam.pos.y = 0;
-	data->cam.pos.z = 0;
+	/**
+	**		camera is parsed, sooo we don't need this
+	**		hardcoded coordinates anymore
+	*/
+//	data->cam.pos.x = 0;
+//	data->cam.pos.y = 0;
+//	data->cam.pos.z = 0;
 
 	min_dist = INFINITY;
 	d = eye_trace(x, y, &data->cam);//o + t * vec(d)
 	tmp = data->objs;
 	while (tmp)
 	{
+//	    func = data->find_destination[(*(t_obj **)tmp->content)->type];
+//	    dist = func(data, *(t_obj **)tmp->content, &d);
 		dist = data->find_destination[(*(t_obj **)tmp->content)->type](data, *(t_obj **)tmp->content, &d);
 		if (dist > 1 && dist < INFINITY)
 		{
@@ -52,6 +58,16 @@ void		draw_figure(int x, int y, t_data *data)
 	if (min_dist != INFINITY)
 	{
 		data->mlx.data[x + H_WIDTH + (y + H_HEIGHT) * WIDTH] = vec3_to_color(obj->color);
+	}
+	if (min_dist != INFINITY)
+	{
+//		data->mlx.data[x + H_WIDTH + (y + H_HEIGHT) * WIDTH] = 0x0000ffff;
+//		float g = sqrt(1 / (min_dist + 1));//extra / for "debaga"
+//		data->mlx.data[x + H_WIDTH + (y + H_HEIGHT) * WIDTH] = vec3_to_color((t_vec3){g, g, g});
+	}
+	else
+	{
+		data->mlx.data[x + H_WIDTH + (y + H_HEIGHT) * WIDTH] = 0; // black
 	}
 }
 

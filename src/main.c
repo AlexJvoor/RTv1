@@ -20,41 +20,41 @@ void			esc_exit(int kw)
 	}
 }
 
-t_cam			init_cam()
-{
-	t_cam		cam;
-	
-	cam.pos = vec3(0, 0, 0);
-	cam.dir = vec3(1, 0, 0);
-	cam.deg = vec3(0, 0, 1);
+//t_cam			init_cam()
+//{
+//	t_cam		cam;
+//
+//	cam.pos = vec3(0, 0, 0);
+//	cam.dir = vec3(1, 0, 0);
+//	cam.deg = vec3(0, 0, 1);
+//
+//	return(cam);
+//}
 
-	return(cam);
-}
-
-t_plane			init_plane()
-{
-	t_plane		plane;
-	
-	plane.coords = vec3(20, 20, 20);
-	plane.norm	= vec3(0, 0, 1);
-}
-
-// void			draw_plane(t_plane plane, int *img)
-// {
-	
-// }
+//t_plane			*init_plane()
+//{
+//	t_plane		*plane;
+//
+//	plane = ft_memalloc(sizeof(t_plane));
+//	plane->norm = vec3_normalize(vec3(0, 0, 12000));
+//	plane->dist = 500000.0;
+//	return (plane);
+//}
 
 int				main()
 {
-	int i = 0;
-	t_plane		plane = init_plane();
-//	t_mlx		mlx = init_mlx();
-	t_cam 		cam = init_cam();
+//	int i = 0;
+//	t_plane		*plane = init_plane();
+//	t_cam 		cam = init_cam();
 	t_data		data;
 
 	init_data(&data);
 	parse("maps/1", &data);
-	// draw_plane(plane, mlx.img);
+//	init_plane();
+
+//	t_list *lst_pln = ft_lstnew((&plane), sizeof(t_plane *));
+//	ft_lstadd(&data.objs, ft_lstnew((&plane), sizeof(t_plane *)));
+//	data.objs->next = ft_lstnew((&plane), sizeof(t_plane *));
 	update_screen(&data);
 	mlx_put_image_to_window(data.mlx.mlx, data.mlx.win, data.mlx.img, 0, 0);
 	mlx_key_hook(data.mlx.win, esc_exit, NULL);

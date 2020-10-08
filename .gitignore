@@ -1,6 +1,7 @@
 # Extra
 RTv1
 cmake*
+.idea
 
 # Prerequisites
 *.d

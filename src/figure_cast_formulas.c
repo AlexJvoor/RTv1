@@ -26,12 +26,40 @@ float		cone_cast(t_data *data, t_obj *obj, t_vec3 *d)
 	return (INFINITY);
 }
 
-float		plane_cast(t_data *data, t_obj *obj, t_vec3 *d)
+float		plane_cast(t_data *data, t_obj *obj, t_vec3 *d_old)
 {
-	return (INFINITY);
+//	printf("-\n");
+	t_vec3 d = vec3_normalize(*d_old);
+    t_plane *pl = (t_plane *)obj;
+    t_vec3 n = vec3_normalize(pl->norm);
+    t_vec3 c = vec3_mult_num(n, pl->dist * -1);
+    t_vec3		o = data->cam.pos;
+    t_vec3		x = vec3_minus(o, c);
+    float dv = vec3_dot(d, n);
+    if (dv == 0)
+    {
+		return (INFINITY);
+	}
+    else
+	{
+//		printf("-\n");
+	}
+	float t = vec3_dot(vec3_invert(x), n) / dv * (-1);
+
+//    if (t < 0)
+//	{
+////		printf("< 0\n");
+//	}
+//    else
+//	{
+//		printf("> 0\n");
+//	}
+	return (t);
 }
 
 float		cylinder_cast(t_data *data, t_obj *obj, t_vec3 *d)
 {
+	(void)data;
+	(void)obj;
 	return (INFINITY);
 }
