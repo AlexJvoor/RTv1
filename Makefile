@@ -18,8 +18,14 @@ SRCS = main.c \
 
 PARSE_SRC = parse.c \
             tools.c \
-            figure.c \
-            safe_call_parse.c
+            parse_float.c \
+            parse_figure_params.c \
+            parse_figure_tools.c \
+            parse_figure.c \
+            parse_light.c \
+            parse_camera.c \
+            safe_call_parse.c \
+            check_parse.c
 
 INCLUDES = -I libnum/include -I libft -I includes -I minilibx_macos
 

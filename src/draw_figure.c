@@ -29,9 +29,13 @@ void		draw_figure(int x, int y, t_data *data)
 	float		min_dist;
 	t_obj		*obj;
 
-	data->cam.pos.x = 0;
-	data->cam.pos.y = 0;
-	data->cam.pos.z = 0;
+	/**
+	**		camera is parsed, sooo we don't need this
+	**		hardcoded coordinates anymore
+	*/
+//	data->cam.pos.x = 0;
+//	data->cam.pos.y = 0;
+//	data->cam.pos.z = 0;
 
 	min_dist = INFINITY;
 	d = eye_trace(x, y, &data->cam);//o + t * vec(d)

@@ -4,7 +4,18 @@
 
 void	remove_data(t_data *data)
 {
+	t_list		*tmp;
 
+	ft_memdel((void **)&data->light);
+	tmp = data->objs;
+	while (data->objs)
+	{
+		tmp = data->objs->next;
+		ft_memdel((void **)&data->objs->content);
+		ft_memdel((void **)&data->objs);
+		if (tmp)
+			data->objs = tmp->next;
+	}
 }
 
 int		safe_call_int(int res, char *message, t_data *data)

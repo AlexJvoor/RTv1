@@ -17,6 +17,8 @@
 
 //TODO для фикса рыбьего глаза м. просчитывать каждую точку как z = sqrt(x^2 + y^2) (?возможно?)
 
+#define		OBJ_COUNT 4
+
 typedef enum	e_type
 {
 	SPHERE,
@@ -84,6 +86,7 @@ typedef struct	s_limcylinder
 typedef struct	s_light
 {
 	int8_t		type;
+	t_vec3		color;
 	t_vec3		coord;
 	float		light_pov;
 	// t_light		*next;
@@ -119,7 +122,7 @@ typedef struct	s_data
 	t_light		*light;
 	t_list		*objs;
 	t_cam		cam;
-	float		(*find_destination[4])(struct s_data *, t_obj *, t_vec3 *);
+	float		(*find_destination[OBJ_COUNT])(struct s_data *, t_obj *, t_vec3 *);
 	t_mlx		mlx;
 }				t_data;
 
@@ -146,11 +149,13 @@ void	*safe_call_ptr_parse(void *res, char *message, t_data *data, t_parse *parse
 */
 
 void	parse(char *str, t_data *data);
+void	parse_figure(int obj_type, t_data *data, t_parse *parse);
 int		parse_light(t_data *data, t_parse *parse);
-int		parse_plane(t_data *data, t_parse *parse);
-int		parse_sphere(t_data *data, t_parse *parse);
-int		parse_cone(t_data *data, t_parse *parse);
-int		parse_cylinder(t_data *data, t_parse *parse);
+int		parse_camera(t_data *data, t_parse *parse);
+int		parse_plane(t_obj **obj, t_data *data, t_parse *parse);
+int		parse_sphere(t_obj **obj, t_data *data, t_parse *parse);
+int		parse_cone(t_obj **obj, t_data *data, t_parse *parse);
+int		parse_cylinder(t_obj **obj, t_data *data, t_parse *parse);
 
 /*
 **		parse tools
@@ -160,7 +165,10 @@ void	check_error(char gnl_read_flag, char brackets, t_data *data);
 int		check_line(char *should_be, char *check);
 char	*parse_float(char *str, float *box);
 char	*skip_to(char *check, char *original);
-void	parse_vec3(char *str, t_vec3 *coordinates, t_data *data, t_parse *parse);
+void	parse_vec3(char *flag_str, t_vec3 *coordinates, t_data *data, t_parse *parse);
+int		parse_float_param(char *check, float *box, t_parse *parse);
+int		parse_coordinates(char *str, t_vec3 *coordinates, t_data *data, t_parse *parse);
+int		parse_color(char *str, t_vec3 *color, t_data *data, t_parse *parse);
 
 /*
 **		memory management
@@ -184,5 +192,12 @@ float		cylinder_cast(t_data *data, t_obj *obj, t_vec3 *d);
 */
 
 void		update_screen(t_data *data);
+void		draw_figure(int x, int y, t_data *data);
+
+/*
+**		TODO: need to delete it later
+*/
+
+void			check_data(t_data *data);
 
 # endif
