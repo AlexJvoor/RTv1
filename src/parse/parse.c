@@ -56,8 +56,6 @@ static void		parse_file(int fd, t_data *data)
 	parse.fd = fd;
 	data->objs = ft_lstnew(NULL, 0);
 	parse.curr_obj = data->objs;
-	data->light = ft_memalloc(sizeof(t_light));
-	parse.light = data->light;
 	while ((parse.gnl_flag = get_next_line(fd, &parse.gnl_str)) == 1)
 	{
 		if (*parse.gnl_str)

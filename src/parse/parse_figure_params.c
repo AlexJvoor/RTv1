@@ -16,6 +16,9 @@ int		parse_plane(t_obj **obj, t_data *data, t_parse *parse)
 	else if (*str == 'd')
 		safe_call_int_parse(parse_float_param("distance", &plane->dist, parse),
 							message, data, parse);
+	else if (*str == 's')
+		safe_call_int_parse(parse_float_param("shine", &plane->shine, parse),
+							message, data, parse);
 	else
 		safe_call_int_parse(-1, message, data, parse);
 	ft_strdel(&parse->gnl_str);
@@ -37,6 +40,9 @@ int		parse_sphere(t_obj **obj, t_data *data, t_parse *parse)
 	}
 	else if (*str == 'r')
 		safe_call_int_parse(parse_float_param("radius", &sphere->rad, parse),
+							message, data, parse);
+	else if (*str == 's')
+		safe_call_int_parse(parse_float_param("shine", &sphere->shine, parse),
 							message, data, parse);
 	else
 		safe_call_int_parse(-1, message, data, parse);
@@ -64,6 +70,9 @@ int		parse_cone(t_obj **obj, t_data *data, t_parse *parse)
 		safe_call_int_parse(parse_float_param("tangent", &cone->tg, parse),
 							message, data, parse);
 	}
+	else if (*str == 's')
+		safe_call_int_parse(parse_float_param("shine", &cone->shine, parse),
+							message, data, parse);
 	else
 		safe_call_int_parse(-1, message, data, parse);
 	ft_strdel(&parse->gnl_str);
@@ -85,6 +94,9 @@ int		parse_cylinder(t_obj **obj, t_data *data, t_parse *parse)
 	}
 	else if (*str == 'd')
 		parse_vec3("dir_vec", &cylinder->dir_vec, data, parse);
+	else if (*str == 's')
+		safe_call_int_parse(parse_float_param("shine", &cylinder->shine, parse),
+							message, data, parse);
 	else
 		safe_call_int_parse(-1, message, data, parse);
 	ft_strdel(&parse->gnl_str);

@@ -43,6 +43,15 @@ static void		*get_parse_function(int obj_type)
 	return (parse_object[obj_type]);
 }
 
+static void		*get_normal_function(int obj_type)
+{
+	static t_vec3	(*normal_function[OBJ_COUNT])(t_obj *,
+					t_vec3 *d, t_vec3 p) = {&sphere_normal,
+					&plane_normal, &cone_normal, &cylinder_normal};
+
+	return (normal_function[obj_type]);
+}
+
 void			parse_figure(int obj_type, t_data *data, t_parse *parse)
 {
 	t_obj			*obj;
@@ -61,6 +70,8 @@ void			parse_figure(int obj_type, t_data *data, t_parse *parse)
 	{
 		parse_line(&obj, data, parse);
 	}
+	obj->find_normal = get_normal_function(obj_type);
+	obj->bright_cast = &bright_cast;
 	parse->curr_obj->next = ft_lstnew((&obj), sizeof(t_obj *));
 	parse->curr_obj = parse->curr_obj->next;
 }

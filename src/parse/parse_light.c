@@ -2,12 +2,15 @@
 
 static void		parse_light_str(t_light *light, t_data *data, t_parse *parse)
 {
-	char	*str;
+	char			*str;
 	static char		*message = "light data is wrong: \"src/parse/figure.c\"";
 
 	str = skip_to("", parse->gnl_str);
 	if (*str == 'c')
-		parse_vec3("coordinates", &light->coord, data, parse);
+	{
+		if (parse_coordinates(str, &light->coord, data, parse) == -1)
+			parse_color(str, &light->color, data, parse);
+	}
 	else if (*str == 'l')
 		safe_call_int_parse(parse_float_param("light_pov",
 							&light->light_pov, parse),
@@ -28,7 +31,7 @@ static void		init_light(t_light **light, t_data *data, t_parse *parse)
 
 int				parse_light(t_data *data, t_parse *parse)
 {
-	t_light	*light;
+	t_light		*light;
 
 	init_light(&light, data, parse);
 	while ((parse->gnl_flag = get_next_line(parse->fd, &parse->gnl_str)) == 1
@@ -37,6 +40,15 @@ int				parse_light(t_data *data, t_parse *parse)
 		parse_light_str(light, data, parse);
 		ft_strdel(&parse->gnl_str);
 	}
-	data->light = light;
+	if (data->light == NULL)
+	{
+		data->light = light;
+		parse->light = light;
+	}
+	else
+	{
+		parse->light->next = light;
+		parse->light = parse->light->next;
+	}
 	return (0);
 }

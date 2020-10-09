@@ -33,8 +33,8 @@ static void		parse_line(t_data *data, t_parse *parse)
 int				parse_camera(t_data *data, t_parse *parse)
 {
 	init_cam(data, parse);
-	while ((parse->gnl_flag = get_next_line(parse->fd, &parse->gnl_str)) == 1
-		 	&& check_line("t_camera", parse->gnl_str))
+	while ((parse->gnl_flag = get_next_line(parse->fd, &parse->gnl_str)) == 1 &&
+			check_line("t_camera", parse->gnl_str))
 	{
 		parse_line(data, parse);
 		ft_strdel(&parse->gnl_str);

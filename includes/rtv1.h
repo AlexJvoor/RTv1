@@ -13,11 +13,15 @@
 #define H_HEIGHT HEIGHT / 2
 #define H_WIDTH WIDTH / 2
 
+#define OBJ_SHINE	100
+
 #define FOV 1,0472// == rads 60 | 1,5708 == rads 90
 
 //TODO для фикса рыбьего глаза м. просчитывать каждую точку как z = sqrt(x^2 + y^2) (?возможно?)
 
 #define		OBJ_COUNT 4
+
+typedef struct	s_obj	t_obj;
 
 typedef enum	e_type
 {
@@ -32,7 +36,10 @@ typedef struct  s_plane
 {
 	int8_t		type;
 	t_vec3		color;//TODO: parse colors
-//    t_vec3      coords;//произв точка на пл-ти
+	float		shine;
+	t_vec3		(*find_normal)(t_obj *, t_vec3 *d, t_vec3 p);
+	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, float);
+	//    t_vec3      coords;//произв точка на пл-ти
 	t_vec3		norm;//нормаль к плоскости
     t_num       dist;//кратчайшее расстояние до плоскости
 }				t_plane;
@@ -41,6 +48,9 @@ typedef struct  s_sphere
 {
 	int8_t		type;
 	t_vec3		color;
+	float		shine;
+	t_vec3		(*find_normal)(t_obj *, t_vec3 *d, t_vec3 p);
+	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, float);
 	t_vec3      coords;//центр
 	float       rad;
 }				t_sphere;
@@ -49,6 +59,9 @@ typedef struct  s_cone
 {
 	int8_t		type;
 	t_vec3		color;
+	float		shine;
+	t_vec3		(*find_normal)(t_obj *, t_vec3 *d, t_vec3 p);
+	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, float);
 	t_vec3		coords;//центр
 	t_vec3		dir_vec;//вектор направления конуса
 	float		tg;//тангенс от 1/2 угла расширения конуса
@@ -58,6 +71,9 @@ typedef struct  s_limcone//огранич. конус
 {
 	int8_t		type;
 	t_vec3		color;
+	float		shine;
+	t_vec3		(*find_normal)(t_obj *, t_vec3 *d, t_vec3 p);
+	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, float);
 	t_vec3		coords;//центр
 	t_vec3		dir_vec;//вектор направления конуса
 	float		tg;//тангенс от 1/2 угла расширения конуса
@@ -69,6 +85,9 @@ typedef struct	s_cylinder
 {
 	int8_t		type;
 	t_vec3		color;
+	float		shine;
+	t_vec3		(*find_normal)(t_obj *, t_vec3 *d, t_vec3 p);
+	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, float);
 	t_vec3		coords;//произв. точка на оси цилиндра
 	t_vec3		dir_vec;//напр цилиндра
 	float		rad;
@@ -78,6 +97,9 @@ typedef struct	s_limcylinder
 {
 	int8_t		type;
 	t_vec3		color;
+	float		shine;
+	t_vec3		(*find_normal)(t_obj *, t_vec3 *d, t_vec3 p);
+	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, float);
 	t_vec3		max;//произв. точка на оси цилиндра
 	t_vec3		dir_vec;//напр цилиндра
 	float		rad;
@@ -85,11 +107,11 @@ typedef struct	s_limcylinder
 
 typedef struct	s_light
 {
-	int8_t		type;
-	t_vec3		color;
-	t_vec3		coord;
-	float		light_pov;
-	// t_light		*next;
+	int8_t				type;
+	t_vec3				color;
+	t_vec3				coord;
+	float				light_pov;
+	struct	s_light		*next;
 	//smth else coming
 }				t_light;
 
@@ -100,11 +122,14 @@ typedef struct	s_cam
 	t_vec3		deg;
 }				t_cam;
 
-typedef struct	s_obj
+struct	s_obj
 {
 	int8_t		type;
 	t_vec3		color;
-}				t_obj;
+	float		shine;
+	t_vec3		(*find_normal)(t_obj *, t_vec3 *d, t_vec3 p);
+	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, float);
+};
 
 typedef struct	s_mlx
 {
@@ -122,8 +147,8 @@ typedef struct	s_data
 	t_light		*light;
 	t_list		*objs;
 	t_cam		cam;
-	float		(*find_destination[OBJ_COUNT])(struct s_data *, t_obj *, t_vec3 *);
-	t_vec3		(*find_normal[OBJ_COUNT])(t_obj *, t_vec3 *d, t_vec3 p);
+	float		(*find_destination[OBJ_COUNT])(struct s_data *, t_obj *, t_vec3 *, t_vec3 *);
+//	t_vec3		(*find_normal[OBJ_COUNT])(t_obj *, t_vec3 *d, t_vec3 p);
 	t_mlx		mlx;
 }				t_data;
 
@@ -183,10 +208,10 @@ t_mlx	init_mlx();
 **		figure cast formulas
 */
 
-float		sphere_cast(t_data *data, t_obj *obj, t_vec3 *d);
-float		cone_cast(t_data *data, t_obj *obj, t_vec3 *d);
-float		plane_cast(t_data *data, t_obj *obj, t_vec3 *d);
-float		cylinder_cast(t_data *data, t_obj *obj, t_vec3 *d);
+float		sphere_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *p);
+float		cone_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *p);
+float		plane_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *p);
+float		cylinder_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *p);
 
 /*
 **		figure_normals.c
@@ -204,6 +229,18 @@ t_vec3		cylinder_normal(t_obj *obj, t_vec3 *d, t_vec3 p);
 
 void		update_screen(t_data *data);
 void		draw_figure(int x, int y, t_data *data);
+
+/*
+**		find_color.c
+*/
+
+t_vec3		curr_color(t_obj *obj, t_vec3 d, t_light *light, t_vec3 p, t_data *data);
+int			vec3_to_color(t_vec3 vec);
+t_vec3		bright_cast2(t_vec3 light_col, t_vec3 l, t_vec3 normal, float shine);
+t_vec3		bright_cast(t_vec3 light_col, t_vec3 l, t_vec3 normal, float shine);
+t_vec3		bright_cast3(t_vec3 light_col, t_vec3 l, t_vec3 normal, float shine);
+t_vec3		bright_cast4(t_vec3 light_col, t_vec3 l, t_vec3 normal, float shine);
+t_vec3		bright_cast5(t_vec3 light_col, t_vec3 l, t_vec3 normal, float shine);
 
 /*
 **		TODO: need to delete it later

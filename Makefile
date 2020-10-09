@@ -15,7 +15,8 @@ SRCS = main.c \
        draw_figure.c \
        figure_cast_formulas.c \
 	   update_screen.c \
-	   figures_normal.c
+	   figures_normal.c \
+	   find_color.c
 
 PARSE_SRC = parse.c \
             tools.c \

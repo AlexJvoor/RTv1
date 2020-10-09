@@ -10,21 +10,23 @@ t_vec3		eye_trace(int x, int y, t_cam *cam)
 				(y) * (VY), 1.0}, cam->pos)));
 }
 
-//TODO: incorrect num!... or correct?
-int			vec3_to_color(t_vec3 vec)
+int			final_color(t_data *data, t_obj *obj, float min_dist, t_vec3 d)
 {
-	t_vec3		res_vec;
-	int			color;
+	t_light		*tmp;
+	t_vec3		color;
+	t_vec3		p;
 
-	res_vec = vec3_mult_num(vec, 255);
-	res_vec.x = res_vec.x > 255 ? 255 : res_vec.x;
-	res_vec.y = res_vec.y > 255 ? 255 : res_vec.y;
-	res_vec.z = res_vec.z > 255 ? 255 : res_vec.z;
-	res_vec.x = res_vec.x < 0 ? 0 : res_vec.x;
-	res_vec.y = res_vec.y < 0 ? 0 : res_vec.y;
-	res_vec.z = res_vec.z < 0 ? 0 : res_vec.z;
-	color = 0 << 24 | (int)res_vec.x << 16 | (int)res_vec.y << 8 | (int)res_vec.z;
-	return (color);
+	tmp = data->light;
+	p = vec3_plus(vec3_mult_num(d, min_dist), data->cam.pos);
+	color.x = 0;
+	color.y = 0;
+	color.z = 0;
+	while (tmp)
+	{
+		color = vec3_plus(curr_color(obj, d, tmp, p, data), color);
+		tmp = tmp->next;
+	}
+	return (vec3_to_color(color));
 }
 
 void		draw_figure(int x, int y, t_data *data)
@@ -34,19 +36,12 @@ void		draw_figure(int x, int y, t_data *data)
 	float		dist;
 	float		min_dist;
 	t_obj		*obj;
-	t_vec3		l;
-	t_vec3		p;
-	t_vec3		normal;
 
 	/**
 	**		camera is parsed, sooo we don't need this
 	**		hardcoded coordinates anymore
 	*/
-//	data->cam.pos.x = 0;
-//	data->cam.pos.y = 0;
-//	data->cam.pos.z = 0;
 
-//	l = от p до источника света
 	min_dist = INFINITY;
 	d = eye_trace(x, y, &data->cam);//o + t * vec(d)
 	tmp = data->objs;
@@ -54,7 +49,7 @@ void		draw_figure(int x, int y, t_data *data)
 	{
 //	    func = data->find_destination[(*(t_obj **)tmp->content)->type];
 //	    dist = func(data, *(t_obj **)tmp->content, &d);
-		dist = data->find_destination[(*(t_obj **)tmp->content)->type](data, *(t_obj **)tmp->content, &d);
+		dist = data->find_destination[(*(t_obj **)tmp->content)->type](data, *(t_obj **)tmp->content, &d, &data->cam.pos);
 		if (dist > 1 && dist < INFINITY)
 		{
 			if (dist < min_dist)
@@ -67,18 +62,7 @@ void		draw_figure(int x, int y, t_data *data)
 	}
 	if (min_dist != INFINITY)
 	{
-		p = vec3_plus(vec3_mult_num(d, min_dist), data->cam.pos);
-		l = vec3_minus(p, data->light->coord);
-		normal = data->find_normal[obj->type](obj, &d, p);
-		float light_intence = vec3_dot(vec3_normalize(l), normal) / (vec3_len(normal) * vec3_len(l));
-//		light_intence += 0.5;
-		data->mlx.data[x + H_WIDTH + (y + H_HEIGHT) * WIDTH] = vec3_to_color(vec3_mult_num(obj->color, light_intence));
-
-//		printf("%f\n", light_intence);
-//		float light_intence = vec3_normalize(l) * normal / (|l| * |normal|);
-//		color_res = light_intence * obj_color;
-//
-//		data->mlx.data[x + H_WIDTH + (y + H_HEIGHT) * WIDTH] = vec3_to_color(obj->color);
+		data->mlx.data[x + H_WIDTH + (y + H_HEIGHT) * WIDTH] = final_color(data, obj, min_dist, d);
 	}
 	if (min_dist != INFINITY)
 	{
