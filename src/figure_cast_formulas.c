@@ -45,7 +45,6 @@ float		plane_cast(t_data *data, t_obj *obj, t_vec3 *d_old, t_vec3 *cam)
 
 float		cylinder_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *cam)
 {
-	//	m = (D*t+X)|V
 	float		res;
 	t_vec3 v = vec3_normalize(((t_cylinder*)obj)->dir_vec);
 	t_vec3	oc = vec3_minus(*cam, ((t_cylinder*)obj)->coords);
@@ -57,14 +56,5 @@ float		cylinder_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *cam)
 		return (INFINITY);
 	float t1 = (-b + sqrt(discriminant)) / (2*a);
 	float t2 = (-b - sqrt(discriminant)) / (2*a);
-	res = t1 < t2 ? t1 : t2;
-	if (res < 0)
-		return (res);
-	float mmm = vec3_dot(*d, vec3_mult_num(v, res)) + vec3_dot(oc, v);
-
-	t_vec3 p = vec3_plus(vec3_mult_num(*d, res), data->cam.pos);
-
-//	((t_cylinder*)obj)->normal = vec3_normalize(vec3_minus(vec3_minus(p, ((t_cylinder*)obj)->coords), vec3_mult_num(v, mmm)));
-	((t_cylinder*)obj)->normal = vec3_normalize(vec3_minus(vec3_mult_num(v, mmm), vec3_minus(p, ((t_cylinder*)obj)->coords)));
-	return (res);
+	return (t1 < t2 ? t1 : t2);
 }

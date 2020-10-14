@@ -17,15 +17,12 @@ int			final_color(t_data *data, t_obj *obj, float min_dist, t_vec3 d)
 	t_vec3		p;
 
 	tmp = data->light;
-//	if (obj->type == CYLINDER)
-//		return (vec3_to_color(obj->color));
-	p = vec3_plus(vec3_mult_num(d, min_dist), data->cam.pos);
 	color.x = 0;
 	color.y = 0;
 	color.z = 0;
 	while (tmp)
 	{
-		color = vec3_plus(curr_color(obj, d, tmp, p, data), color);
+		color = vec3_plus(curr_color(obj, d, tmp, min_dist, data), color);
 		tmp = tmp->next;
 	}
 	return (vec3_to_color(color));

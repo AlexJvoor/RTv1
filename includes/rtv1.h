@@ -32,12 +32,19 @@ typedef enum	e_type
 	LIGHT
 }				t_type;
 
+typedef struct	s_cam
+{
+	t_vec3		pos;
+	t_vec3		dir;//vec D
+	t_vec3		deg;
+}				t_cam;
+
 typedef struct  s_plane
 {
 	int8_t		type;
-	t_vec3		color;//TODO: parse colors
+	t_vec3		color;
 	float		shine;
-	t_vec3		(*find_normal)(t_obj *, t_vec3 *d, t_vec3 p);
+	t_vec3		(*find_normal)(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam);
 	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, float);
 	//    t_vec3      coords;//произв точка на пл-ти
 	t_vec3		norm;//нормаль к плоскости
@@ -49,7 +56,7 @@ typedef struct  s_sphere
 	int8_t		type;
 	t_vec3		color;
 	float		shine;
-	t_vec3		(*find_normal)(t_obj *, t_vec3 *d, t_vec3 p);
+	t_vec3		(*find_normal)(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam);
 	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, float);
 	t_vec3      coords;//центр
 	float       rad;
@@ -60,7 +67,7 @@ typedef struct  s_cone
 	int8_t		type;
 	t_vec3		color;
 	float		shine;
-	t_vec3		(*find_normal)(t_obj *, t_vec3 *d, t_vec3 p);
+	t_vec3		(*find_normal)(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam);
 	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, float);
 	t_vec3		coords;//центр
 	t_vec3		dir_vec;//вектор направления конуса
@@ -72,7 +79,7 @@ typedef struct  s_limcone//огранич. конус
 	int8_t		type;
 	t_vec3		color;
 	float		shine;
-	t_vec3		(*find_normal)(t_obj *, t_vec3 *d, t_vec3 p);
+	t_vec3		(*find_normal)(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam);
 	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, float);
 	t_vec3		coords;//центр
 	t_vec3		dir_vec;//вектор направления конуса
@@ -86,12 +93,11 @@ typedef struct	s_cylinder
 	int8_t		type;
 	t_vec3		color;
 	float		shine;
-	t_vec3		(*find_normal)(t_obj *, t_vec3 *d, t_vec3 p);
+	t_vec3		(*find_normal)(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam);
 	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, float);
 	t_vec3		coords;//произв. точка на оси цилиндра
 	t_vec3		dir_vec;//напр цилиндра
 	float		rad;
-	t_vec3		normal;
 }				t_cylinder;
 
 typedef struct	s_limcylinder
@@ -99,7 +105,7 @@ typedef struct	s_limcylinder
 	int8_t		type;
 	t_vec3		color;
 	float		shine;
-	t_vec3		(*find_normal)(t_obj *, t_vec3 *d, t_vec3 p);
+	t_vec3		(*find_normal)(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam);
 	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, float);
 	t_vec3		max;//произв. точка на оси цилиндра
 	t_vec3		dir_vec;//напр цилиндра
@@ -116,19 +122,12 @@ typedef struct	s_light
 	//smth else coming
 }				t_light;
 
-typedef struct	s_cam
-{
-	t_vec3		pos;
-	t_vec3		dir;//vec D
-	t_vec3		deg;
-}				t_cam;
-
 struct	s_obj
 {
 	int8_t		type;
 	t_vec3		color;
 	float		shine;
-	t_vec3		(*find_normal)(t_obj *, t_vec3 *d, t_vec3 p);
+	t_vec3		(*find_normal)(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam);
 	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, float);
 };
 
@@ -218,10 +217,10 @@ float		cylinder_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *p);
 **		figure_normals.c
 */
 
-t_vec3		sphere_normal(t_obj *obj, t_vec3 *d, t_vec3 p);
-t_vec3		plane_normal(t_obj *obj, t_vec3 *d, t_vec3 p);
-t_vec3		cone_normal(t_obj *obj, t_vec3 *d, t_vec3 p);
-t_vec3		cylinder_normal(t_obj *obj, t_vec3 *d, t_vec3 p);
+t_vec3		sphere_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam);
+t_vec3		plane_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam);
+t_vec3		cone_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam);
+t_vec3		cylinder_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam);
 
 
 /*
@@ -235,7 +234,7 @@ void		draw_figure(int x, int y, t_data *data);
 **		find_color.c
 */
 
-t_vec3		curr_color(t_obj *obj, t_vec3 d, t_light *light, t_vec3 p, t_data *data);
+t_vec3		curr_color(t_obj *obj, t_vec3 d, t_light *light, float min_dist, t_data *data);
 int			vec3_to_color(t_vec3 vec);
 t_vec3		bright_cast2(t_vec3 light_col, t_vec3 l, t_vec3 normal, float shine);
 t_vec3		bright_cast(t_vec3 light_col, t_vec3 l, t_vec3 normal, float shine);
