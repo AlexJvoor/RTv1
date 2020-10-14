@@ -60,15 +60,17 @@ void			check_data(t_data *data)
 		}
 		if ((*(t_obj **)lst->content)->type == CYLINDER)
 		{
-			printf("Type: cylinder\n"
+			printf("Type: cylinder11111\n"
 			"coordinates: %f, %f, %f\n"
-			"dir_vec: %f, %f, %f\n",
+			"dir_vec: %f, %f, %f\n"
+   			"radius: %f\n\n",
 			(*(t_cylinder **)lst->content)->coords.x,
 			(*(t_cylinder **)lst->content)->coords.y,
 			(*(t_cylinder **)lst->content)->coords.z,
-			(*(t_cone **)lst->content)->dir_vec.x,
-			(*(t_cone **)lst->content)->dir_vec.y,
-			(*(t_cone **)lst->content)->dir_vec.z);
+			(*(t_cylinder **)lst->content)->dir_vec.x,
+			(*(t_cylinder **)lst->content)->dir_vec.y,
+			(*(t_cylinder **)lst->content)->dir_vec.z,
+			(*(t_cylinder **)lst->content)->rad);
 		}
 		lst = lst->next;
 	}

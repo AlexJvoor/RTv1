@@ -92,6 +92,9 @@ int		parse_cylinder(t_obj **obj, t_data *data, t_parse *parse)
 		if (parse_coordinates(str, &cylinder->coords, data, parse) == -1)
 			parse_color(str, &cylinder->color, data, parse);
 	}
+	else if (*str == 'r')
+		safe_call_int_parse(parse_float_param("radius", &cylinder->rad, parse),
+		message, data, parse);
 	else if (*str == 'd')
 		parse_vec3("dir_vec", &cylinder->dir_vec, data, parse);
 	else if (*str == 's')
