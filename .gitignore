@@ -1,4 +1,5 @@
 # Extra
+*.idea
 RTv1
 cmake*
 
