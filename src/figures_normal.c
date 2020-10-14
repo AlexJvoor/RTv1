@@ -21,5 +21,5 @@ t_vec3		cone_normal(t_obj *obj, t_vec3 *d, t_vec3 p)
 
 t_vec3		cylinder_normal(t_obj *obj, t_vec3 *d, t_vec3 p)
 {
-	return ((t_vec3){0, 0, 0});
+	return ((t_cylinder*)obj)->normal;
 }

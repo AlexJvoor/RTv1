@@ -91,6 +91,7 @@ typedef struct	s_cylinder
 	t_vec3		coords;//произв. точка на оси цилиндра
 	t_vec3		dir_vec;//напр цилиндра
 	float		rad;
+	t_vec3		normal;
 }				t_cylinder;
 
 typedef struct	s_limcylinder

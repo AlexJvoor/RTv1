@@ -17,6 +17,8 @@ int			final_color(t_data *data, t_obj *obj, float min_dist, t_vec3 d)
 	t_vec3		p;
 
 	tmp = data->light;
+//	if (obj->type == CYLINDER)
+//		return (vec3_to_color(obj->color));
 	p = vec3_plus(vec3_mult_num(d, min_dist), data->cam.pos);
 	color.x = 0;
 	color.y = 0;
@@ -50,7 +52,7 @@ void		draw_figure(int x, int y, t_data *data)
 //	    func = data->find_destination[(*(t_obj **)tmp->content)->type];
 //	    dist = func(data, *(t_obj **)tmp->content, &d);
 		dist = data->find_destination[(*(t_obj **)tmp->content)->type](data, *(t_obj **)tmp->content, &d, &data->cam.pos);
-		if (dist > 1 && dist < INFINITY)
+		if (dist > 0 && dist < INFINITY)
 		{
 			if (dist < min_dist)
 			{
