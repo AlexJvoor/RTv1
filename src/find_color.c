@@ -80,13 +80,15 @@ t_vec3		bright_cast4(t_vec3 light_col, t_vec3 l, t_vec3 normal, float shine)
 //	return (b_vec_res);
 //}
 
-int			is_shadowed(t_data *data, t_obj *obj, t_vec3 l, t_vec3 *p)
+int			is_shadowed(t_data *data, t_obj *obj, t_vec3 u, t_vec3 *p)
 {
 	t_list		*tmp;
 	float		dist;
 	t_vec3		norm_l;
 	float		dist_l;
+	t_vec3		l;
 
+	l = vec3_minus(u, *p);
 	norm_l = vec3_normalize(l);
 	dist_l = vec3_len(l);
 	tmp = data->objs;
@@ -94,13 +96,11 @@ int			is_shadowed(t_data *data, t_obj *obj, t_vec3 l, t_vec3 *p)
 	{
 		if (*(void **)(tmp->content) == obj)
 		{
-////			printf("%f, %f\n", dist, dist_l);
 			tmp = tmp->next;
 			continue ;
 		}
-		//incorrect return!
-		dist = data->find_destination[(*(t_obj **)tmp->content)->type](data, *(t_obj **)tmp->content, &l, p);
-		if (dist < dist_l && dist > 0 && dist < 1)
+		dist = data->find_destination[(*(t_obj **)tmp->content)->type](data, *(t_obj **)tmp->content, &norm_l, p);
+		if (dist > 0 && dist < 1)
 		{
 			return (1);
 		}
@@ -115,14 +115,16 @@ t_vec3		curr_color(t_obj *obj, t_vec3 d, t_light *light, t_vec3 p, t_data *data)
 	t_vec3		normal;
 	t_vec3		res;
 	t_vec3		b_vec_res;
+	t_vec3		shadowed;
 
 	l = vec3_minus(p, light->coord);
-//	if (is_shadowed(data, obj, l, &p))
-//	{
-//		return (t_vec3) {0.0, 0.0, 0.0};
-//	}
+	shadowed = (t_vec3){0.0, 0.0, 0.0};
+	if (is_shadowed(data, obj, light->coord, &p))
+	{
+		shadowed = (t_vec3){-0.2 * light->light_pov, -0.2 * light->light_pov, -0.2 * light->light_pov};
+	}
 	normal = obj->find_normal(obj, &d, p);
 	res = vec3_mult_num(light_cast(light->color, l, normal), light->light_pov);
 	b_vec_res = vec3_mult_num(obj->bright_cast(light->color, l, normal, (int)obj->shine), light->light_pov);
-	return (vec3_plus(vec3_mult(obj->color, res), b_vec_res));
+	return (vec3_plus(vec3_plus(vec3_mult(obj->color, res), b_vec_res), shadowed));
 }
