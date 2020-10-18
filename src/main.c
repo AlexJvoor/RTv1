@@ -65,7 +65,7 @@ int			esc_exit(int kw, t_data *data)
 //	return (plane);
 //}
 
-int				main()
+int				main(int ac, char **av)
 {
 //	int i = 0;
 //	t_plane		*plane = init_plane();
@@ -73,7 +73,9 @@ int				main()
 	t_data		data;
 
 	init_data(&data);
-	parse("maps/1", &data);
+	if (ac < 2)
+		return (0);
+	parse(av[1], &data);//"maps/2"
 //	init_plane();
 
 //	t_list *lst_pln = ft_lstnew((&plane), sizeof(t_plane *));

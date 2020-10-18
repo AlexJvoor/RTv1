@@ -17,9 +17,22 @@ t_vec3		plane_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam)
 
 t_vec3		cone_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam)
 {
-	return ((t_vec3){0, 0, 0});
-}
+	t_vec3	v;
+	t_vec3	oc;
+	float	m;
+	float	k = ((t_cone*)obj)->tg;
+	t_vec3	p;
+	t_vec3	p_c;
+	t_vec3	v_m;
 
+	v = vec3_normalize(((t_cone*)obj)->dir_vec);
+	oc = vec3_minus(cam.pos, ((t_cone*)obj)->coords);
+	m = vec3_dot(*d, vec3_mult_num(v, min_dist)) + vec3_dot(oc, v);
+	v_m = vec3_mult_num(v, m);
+	p = vec3_plus(vec3_mult_num(*d, min_dist), cam.pos);
+	p_c = vec3_minus(p, ((t_cone*)obj)->coords);
+	return vec3_normalize(vec3_minus(vec3_minus(v_m, p_c), vec3_mult_num(v, m*k*k)));
+}
 //t_vec3		cylinder_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam)
 //{
 //	t_vec3	v;
@@ -38,7 +51,6 @@ t_vec3		cone_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam)
 //	return vec3_normalize(vec3_minus(vec3_mult_num(v, m), vec3_minus(p, ((t_cylinder*)obj)->coords)));
 //}
 
-
 t_vec3		cylinder_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam)
 {
 	t_vec3	v;
@@ -54,6 +66,6 @@ t_vec3		cylinder_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam)
 	p = vec3_plus(vec3_mult_num(*d, min_dist), cam.pos);
 	p_c = vec3_minus(p, ((t_cylinder*)obj)->coords);
 	v_m = vec3_mult_num(v, m);
-//	return vec3_normalize(vec3_minus(v_m, p_c));
 	return vec3_normalize(vec3_minus(v_m, p_c));
+//	return vec3_mult_num(vec3_normalize(vec3_minus(p_c, v_m)), -1);
 }
