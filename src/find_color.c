@@ -120,12 +120,16 @@ t_vec3		curr_color(t_obj *obj, t_vec3 d, t_light *light, t_num min_dist, t_data 
 
 	p = vec3_plus(vec3_mult_num(d, min_dist), data->cam.pos);
 	l = vec3_minus(p, light->coord);
+//	if (vec3_dot(d, l) < 0)
+//		return (t_vec3){0.0, 0.0, 0.0};
 	shadowed = (t_vec3){0.0, 0.0, 0.0};
 	if (is_shadowed(data, obj, light->coord, &p))
 	{
 		return ((t_vec3){0.0, 0.0, 0.0});
 //		shadowed = (t_vec3){-0.2 * light->light_pov, -0.2 * light->light_pov, -0.2 * light->light_pov};
 	}
+//	if ((t_obj))
+
 	normal = obj->find_normal(obj, &d, min_dist,data->cam);
 	res = vec3_mult_num(light_cast(light->color, l, normal), light->light_pov);
 	b_vec_res = vec3_mult_num(obj->bright_cast(light->color, l, normal, (int)obj->shine), light->light_pov);
