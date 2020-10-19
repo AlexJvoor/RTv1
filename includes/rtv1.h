@@ -165,8 +165,6 @@ typedef struct	s_parse
 **		simple error management
 */
 
-int		safe_call_int(int res, char *message, t_data *data);
-void	*safe_call_ptr(void *res, char *message, t_data *data);
 int		safe_call_int_parse(int res, char *message, t_data *data, t_parse *parse);
 void	*safe_call_ptr_parse(void *res, char *message, t_data *data, t_parse *parse);
 
@@ -197,15 +195,7 @@ int		parse_coordinates(char *str, t_vec3 *coordinates, t_data *data, t_parse *pa
 int		parse_color(char *str, t_vec3 *color, t_data *data, t_parse *parse);
 
 /*
-**		memory management
-*/
-
-void	init_data(t_data *data);
-void	remove_data(t_data *data);
-t_mlx	init_mlx();
-
-/*
-**		figure cast formulas
+**		figure_cast_formulas.c
 */
 
 float		sphere_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *p);
@@ -227,7 +217,6 @@ t_vec3		cylinder_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam);
 **		draw loop
 */
 
-void		update_screen(t_data *data);
 void		draw_figure(int x, int y, t_data *data);
 
 /*
@@ -241,6 +230,29 @@ t_vec3		bright_cast(t_vec3 light_col, t_vec3 l, t_vec3 normal, float shine);
 t_vec3		bright_cast3(t_vec3 light_col, t_vec3 l, t_vec3 normal, float shine);
 t_vec3		bright_cast4(t_vec3 light_col, t_vec3 l, t_vec3 normal, float shine);
 t_vec3		bright_cast5(t_vec3 light_col, t_vec3 l, t_vec3 normal, float shine);
+
+/*
+**		init_data.c
+*/
+
+void	init_data(t_data *data);
+t_mlx	init_mlx();
+
+/*
+**		safe_call.c
+*/
+
+int		safe_call_int(int res, char *message, t_data *data);
+void	*safe_call_ptr(void *res, char *message, t_data *data);
+void	remove_data(t_data *data);
+
+/*
+**		update_screen.c
+*/
+
+void		update_screen(t_data *data);
+
+
 
 /*
 **		TODO: need to delete it later
