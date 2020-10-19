@@ -4,23 +4,23 @@
 
 #include "rtv1.h"
 
-t_vec3		sphere_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam)
+t_vec3		sphere_normal(t_obj *obj, t_vec3 *d, t_num min_dist, t_cam cam)
 {
 	t_vec3 p = vec3_plus(vec3_mult_num(*d, min_dist), cam.pos);
 	return(vec3_normalize(vec3_minus(((t_sphere *)obj)->coords, p)));
 }
 
-t_vec3		plane_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam)
+t_vec3		plane_normal(t_obj *obj, t_vec3 *d, t_num min_dist, t_cam cam)
 {
 	return (((t_plane *)obj)->norm);
 }
 
-t_vec3		cone_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam)
+t_vec3		cone_normal(t_obj *obj, t_vec3 *d, t_num min_dist, t_cam cam)
 {
 	t_vec3	v;
 	t_vec3	oc;
-	float	m;
-	float	k = ((t_cone*)obj)->tg;
+	t_num	m;
+	t_num	k = ((t_cone*)obj)->tg;
 	t_vec3	p;
 	t_vec3	p_c;
 	t_vec3	v_m;
@@ -33,11 +33,11 @@ t_vec3		cone_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam)
 	p_c = vec3_minus(p, ((t_cone*)obj)->coords);
 	return vec3_normalize(vec3_minus(vec3_minus(v_m, p_c), vec3_mult_num(v, m*k*k)));
 }
-//t_vec3		cylinder_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam)
+//t_vec3		cylinder_normal(t_obj *obj, t_vec3 *d, t_num min_dist, t_cam cam)
 //{
 //	t_vec3	v;
 //	t_vec3	oc;
-//	float	m;
+//	t_num	m;
 //	t_vec3	p;
 ////	t_vec	p_c;
 ////	t_vec3	v_m;
@@ -51,11 +51,11 @@ t_vec3		cone_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam)
 //	return vec3_normalize(vec3_minus(vec3_mult_num(v, m), vec3_minus(p, ((t_cylinder*)obj)->coords)));
 //}
 
-t_vec3		cylinder_normal(t_obj *obj, t_vec3 *d, float min_dist, t_cam cam)
+t_vec3		cylinder_normal(t_obj *obj, t_vec3 *d, t_num min_dist, t_cam cam)
 {
 	t_vec3	v;
 	t_vec3	oc;
-	float	m;
+	t_num	m;
 	t_vec3	p;
 	t_vec3	p_c;
 	t_vec3	v_m;

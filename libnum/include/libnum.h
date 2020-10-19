@@ -15,7 +15,7 @@
 
 # include <math.h>
 
-typedef float		t_num;
+typedef double		t_num;
 
 typedef struct		s_vec2
 {

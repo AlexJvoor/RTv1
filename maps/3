@@ -1,7 +1,7 @@
 cone
-    coordinates     x 0.0, y 0.1, z 1.5
+    coordinates     x 0.1, y 0.1, z 0.5
     shine           100.0
-    dir_vec         x 1.0, y -2.0, z 0.0
+    dir_vec         x -1.0, y 0.2, z 0.0
     tangent       	0.785398
     color			x 0.5, y 0.5, z 1.0
 t_cone
