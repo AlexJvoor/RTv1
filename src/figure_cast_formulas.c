@@ -9,6 +9,7 @@ t_num		sphere_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *cam)
 	t_vec3	c = ((t_sphere *)obj)->coords;
 	t_num	r = ((t_sphere *)obj)->rad;
 	t_vec3	oc = vec3_minus(*cam, c);
+//	t_vec3	oc = vec3_minus(data->cam.pos, c);
 
 	t_num k1 = vec3_dot(*d, *d);
 	t_num k2 = 2 * vec3_dot(oc, *d);
@@ -37,6 +38,7 @@ t_num		cone_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *cam)//mult len of 
 
 	// ray->cent_obj = cone.center;
 	oc = vec3_minus(*cam, ((t_cone *)obj)->coords);
+//	oc = vec3_minus(data->cam.pos, ((t_cone *)obj)->coords);
 	dot_co_r = vec3_dot(oc, ((t_cone *)obj)->dir_vec);
 	dot_ov_r = vec3_dot(*d, ((t_cone *)obj)->dir_vec);
 	k = tan(0.5 * (((t_cone*)obj)->tg));
@@ -58,26 +60,42 @@ t_num		cone_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *cam)//mult len of 
 
 t_num		plane_cast(t_data *data, t_obj *obj, t_vec3 *d_old, t_vec3 *cam)
 {
+	t_num		t;
+	t_num		vx;
+	t_vec3		x;
+
 	t_vec3 d = vec3_normalize(*d_old);
-    t_plane *pl = (t_plane *)obj;
-    t_vec3 n = vec3_normalize(pl->norm);
-    t_vec3 c = vec3_mult_num(n, pl->dist * -1);
-    t_vec3		o = *cam;
-    t_vec3		x = vec3_minus(o, c);
-    t_num dv = vec3_dot(d, n);
-    if (dv == 0)
-    {
-		return (INFINITY);
-	}
-	t_num t = vec3_dot(vec3_invert(x), n) / dv * (-1);
+	x = vec3_minus(*cam, ((t_plane *)obj)->coords);
+//	x = vec3_minus(data->cam.pos, ((t_plane *)obj)->coords);
+	vx = vec3_dot(x, ((t_plane *)obj)->norm) * -1;
+	t = vx / vec3_dot(d, ((t_plane *)obj)->norm);
 	return (t);
 }
+
+//
+//t_num		plane_cast(t_data *data, t_obj *obj, t_vec3 *d_old, t_vec3 *cam)
+//{
+//	t_vec3 d = vec3_normalize(*d_old);
+//	t_plane *pl = (t_plane *)obj;
+//	t_vec3 n = vec3_normalize(pl->norm);
+//	t_vec3 c = vec3_mult_num(n, pl->dist * -1);
+//	t_vec3		o = *cam;
+//	t_vec3		x = vec3_minus(o, c);
+//	t_num dv = vec3_dot(d, n);
+//	if (dv == 0)
+//	{
+//		return (INFINITY);
+//	}
+//	t_num t = vec3_dot(vec3_invert(x), n) / dv * (-1);
+//	return (t);
+//}
 
 t_num		cylinder_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *cam)
 {
 	t_num		res;
 	t_vec3 v = vec3_normalize(((t_cylinder*)obj)->dir_vec);
 	t_vec3	oc = vec3_minus(*cam, ((t_cylinder*)obj)->coords);
+//	t_vec3	oc = vec3_minus(data->cam.pos, ((t_cylinder*)obj)->coords);
 	t_num a = vec3_dot(*d, *d) - pow(vec3_dot(*d, v), 2);
 	t_num b = 2 * (vec3_dot(*d, oc) - vec3_dot(*d, v) * vec3_dot(oc, v));
 	t_num c = vec3_dot(oc, oc) - pow(vec3_dot(oc, v), 2) - pow(((t_cylinder*)obj)->rad, 2);

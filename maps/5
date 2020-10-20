@@ -11,6 +11,13 @@ light
 t_light
 
 plane
+    coordinates     x 0.0, y 0.0, z 4.0
+    shine           9000000.0
+    color           x 0.0, y 0.0, z 0.8
+    normal          x 0.0, y 0.0, z 1.0
+t_plane
+
+plane
     coordinates     x 0.0, y 0.5, z 0.0
     shine           9000000.0
     color           x 0.8, y 0.8, z 0.8
@@ -21,19 +28,12 @@ plane
     coordinates     x 0.0, y -0.5, z 0.0
     shine           9000000.0
     color           x 0.8, y 0.8, z 0.8
-    normal          x 0.0, y 6.0, z 0.0
-t_plane
-
-plane
-    coordinates     x 0.0, y 0.0, z 4.0
-    shine           9000000.0
-    color           x 0.0, y 0.0, z 0.8
-    normal          x 0.0, y 0.0, z 0.0
+    normal          x 0.0, y -6.0, z 0.0
 t_plane
 
 sphere
     coordinates     x 0.0, y 0.30, z 2.5
-    shine           100.0
+    shine           400.0
     color           x 1.0, y 0.0, z 0.0
     radius          0.1
 t_sphere

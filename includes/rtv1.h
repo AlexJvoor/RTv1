@@ -46,7 +46,7 @@ typedef struct  s_plane
 	t_num		shine;
 	t_vec3		(*find_normal)(t_obj *obj, t_vec3 *d, t_num min_dist, t_cam cam);
 	t_vec3		(*bright_cast)(t_vec3, t_vec3, t_vec3, t_num);
-	//    t_vec3      coords;//произв точка на пл-ти
+	t_vec3      coords;//произв точка на пл-ти
 	t_vec3		norm;//нормаль к плоскости
     t_num       dist;//кратчайшее расстояние до плоскости
 }				t_plane;

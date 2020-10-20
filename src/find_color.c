@@ -100,6 +100,10 @@ int			is_shadowed(t_data *data, t_obj *obj, t_vec3 u, t_vec3 *p)
 			continue ;
 		}
 		dist = data->find_destination[(*(t_obj **)tmp->content)->type](data, *(t_obj **)tmp->content, &norm_l, p);
+//		if ((*(t_obj **)(tmp->content))->type == PLANE && obj->type == PLANE)
+//		{
+//			printf("HERE\n");
+//		}
 		if (dist > 0 && dist < dist_l)
 		{
 			return (1);
@@ -120,8 +124,11 @@ t_vec3		curr_color(t_obj *obj, t_vec3 d, t_light *light, t_num min_dist, t_data 
 
 	p = vec3_plus(vec3_mult_num(d, min_dist), data->cam.pos);
 	l = vec3_minus(p, light->coord);
-//	if (vec3_dot(d, l) < 0)
-//		return (t_vec3){0.0, 0.0, 0.0};
+	normal = obj->find_normal(obj, &d, min_dist,data->cam);
+	if (vec3_dot(d, l) < 0)
+		return (t_vec3){0.0, 0.0, 0.0};
+//		return (obj->color);
+//		printf("Here I am\n");
 	shadowed = (t_vec3){0.0, 0.0, 0.0};
 	if (is_shadowed(data, obj, light->coord, &p))
 	{
@@ -130,7 +137,6 @@ t_vec3		curr_color(t_obj *obj, t_vec3 d, t_light *light, t_num min_dist, t_data 
 	}
 //	if ((t_obj))
 
-	normal = obj->find_normal(obj, &d, min_dist,data->cam);
 	res = vec3_mult_num(light_cast(light->color, l, normal), light->light_pov);
 	b_vec_res = vec3_mult_num(obj->bright_cast(light->color, l, normal, (int)obj->shine), light->light_pov);
 //	return (vec3_plus(vec3_plus(vec3_mult(obj->color, res), b_vec_res), shadowed));

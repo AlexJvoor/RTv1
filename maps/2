@@ -26,7 +26,7 @@ plane
     coordinates     x 0.0, y 0.0, z 0.10
     shine           100.0
     color           x 0.8, y 0.0, z 0.8
-    distance         2.50
+    normal          x 0.8, y 0.0, z 0.0
 t_plane
 
 sphere

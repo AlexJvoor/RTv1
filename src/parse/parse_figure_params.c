@@ -10,12 +10,19 @@ int		parse_plane(t_obj **obj, t_data *data, t_parse *parse)
 	str = skip_to("", parse->gnl_str);
 	if (*str == 'c')
 	{
-		if (parse_coordinates(str, &plane->norm, data, parse) == -1)
+		if (parse_coordinates(str, &plane->coords, data, parse) == -1)
 			parse_color(str, &plane->color, data, parse);
 	}
+	else if (*str == 'n')
+	{
+		parse_vec3("normal", &plane->norm, data, parse);
+		plane->norm = vec3_normalize(plane->norm);
+	}
 	else if (*str == 'd')
+	{
 		safe_call_int_parse(parse_t_num_param("distance", &plane->dist, parse),
 							message, data, parse);
+	}
 	else if (*str == 's')
 		safe_call_int_parse(parse_t_num_param("shine", &plane->shine, parse),
 							message, data, parse);
