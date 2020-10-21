@@ -16,7 +16,7 @@ char		*get_sign(char *sign, char *str)
 	return (str);
 }
 
-char		*get_first_num(char *str, float *box)
+char		*get_first_num(char *str, t_num *box)
 {
 	int		i;
 
@@ -33,11 +33,11 @@ char		*get_first_num(char *str, float *box)
 	return (str);
 }
 
-char		*get_second_num(char *str, float *box)
+char		*get_second_num(char *str, t_num *box)
 {
 	int		i;
 	char	flag;
-	float	res;
+	t_num	res;
 
 	i = 0;
 	flag = 1;
@@ -59,7 +59,7 @@ char		*get_second_num(char *str, float *box)
 	return (str);
 }
 
-char		*parse_float(char *str, float *box)
+char		*parse_t_num(char *str, t_num *box)
 {
 	int		i;
 	char	sign;

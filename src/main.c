@@ -17,6 +17,8 @@ void		change_condition(int kw, t_data *data)
 	t_list		*tmp;
 
 	tmp = data->objs;
+	data->texture_my_sphere = FALSE;
+	(*(t_obj **)(tmp->content))->bright_cast = &bright_cast;
 	while (tmp)
 	{
 		if (kw == 18)
@@ -26,7 +28,7 @@ void		change_condition(int kw, t_data *data)
 		else if (kw == 20)
 			(*(t_obj **)(tmp->content))->bright_cast = &bright_cast3;
 		else if (kw == 21)
-			(*(t_obj **)(tmp->content))->bright_cast = &bright_cast4;
+			data->texture_my_sphere = TRUE;
 		tmp = tmp->next;
 	}
 	update_screen(data);
@@ -65,7 +67,7 @@ int			esc_exit(int kw, t_data *data)
 //	return (plane);
 //}
 
-int				main()
+int				main(int ac, char **av)
 {
 //	int i = 0;
 //	t_plane		*plane = init_plane();
@@ -73,7 +75,9 @@ int				main()
 	t_data		data;
 
 	init_data(&data);
-	parse("maps/1", &data);
+	if (ac < 2)
+		return (0);
+	parse(av[1], &data);//"maps/2"
 //	init_plane();
 
 //	t_list *lst_pln = ft_lstnew((&plane), sizeof(t_plane *));

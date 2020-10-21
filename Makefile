@@ -1,7 +1,7 @@
 NAME = RTv1
 
 # TODO enable flags
-FLAGS = -Wall -Wextra #-Werror
+FLAGS = -Wall -Wextra -g#-Werror
 
 MLXFLAGS = -L mlx -lmlx -framework OpenGL -framework AppKit
 
@@ -16,7 +16,8 @@ SRCS = main.c \
        figure_cast_formulas.c \
 	   update_screen.c \
 	   figures_normal.c \
-	   find_color.c
+	   find_color.c \
+	   texturing_sphere.c
 
 PARSE_SRC = parse.c \
             tools.c \

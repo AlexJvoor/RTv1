@@ -1,13 +1,13 @@
 #include "rtv1.h"
 
-int		parse_float_param(char *check, float *box, t_parse *parse)
+int		parse_t_num_param(char *check, t_num *box, t_parse *parse)
 {
 	char			*str;
 
 	str = skip_to(check, parse->gnl_str);
 	if (str == NULL)
 		return (-1);
-	str = parse_float(str, box);
+	str = parse_t_num(str, box);
 	if (str == NULL)
 		return (-1);
 	return (0);

@@ -52,14 +52,14 @@ void		parse_vec3(char *flag_str,
 		message, data, parse);
 	str = safe_call_ptr_parse(skip_to("x", str),
 		message, data, parse);
-	str = safe_call_ptr_parse(parse_float(str, &coordinates->x),
+	str = safe_call_ptr_parse(parse_t_num(str, &coordinates->x),
 		message, data, parse);
 	str = safe_call_ptr_parse(skip_to("y", str),
 		message, data, parse);
-	str = safe_call_ptr_parse(parse_float(str, &coordinates->y),
+	str = safe_call_ptr_parse(parse_t_num(str, &coordinates->y),
 		message, data, parse);
 	str = safe_call_ptr_parse(skip_to("z", str),
 		message, data, parse);
-	str = safe_call_ptr_parse(parse_float(str, &coordinates->z),
+	str = safe_call_ptr_parse(parse_t_num(str, &coordinates->z),
 		message, data, parse);
 }
