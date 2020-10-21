@@ -1,7 +1,16 @@
-#include "rtv1.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_float.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hchau <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/21 15:39:12 by hchau             #+#    #+#             */
+/*   Updated: 2020/10/21 15:39:14 by hchau            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//TODO: not a trustable function, segfault if there are not integers
-//TODO: Need to rewrite!
+#include "rtv1.h"
 
 char		*get_sign(char *sign, char *str)
 {
@@ -54,7 +63,7 @@ char		*get_second_num(char *str, t_num *box)
 		res /= 10.0;
 		str++;
 	}
-	*box += res;
+	*box += *box < 0 ? -res : res;
 	str += flag;
 	return (str);
 }

@@ -80,6 +80,7 @@ int				main(int ac, char **av)
 	parse(av[1], &data);//"maps/2"
 //	init_plane();
 
+	printf("%f, %f\n", cos(data.cam.dir.z), -sin(data.cam.dir.z));
 //	t_list *lst_pln = ft_lstnew((&plane), sizeof(t_plane *));
 //	ft_lstadd(&data.objs, ft_lstnew((&plane), sizeof(t_plane *)));
 //	data.objs->next = ft_lstnew((&plane), sizeof(t_plane *));

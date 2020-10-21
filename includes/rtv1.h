@@ -174,12 +174,22 @@ typedef struct	s_parse
 	int			fd;
 }				t_parse;
 
+typedef struct	s_trace
+{
+	t_vec3		d;
+	t_num		min_dist;
+	t_vec3		p;
+	t_vec3		normal;
+	t_vec3		obj_col;
+}				t_trace;
+
 /*
 **		simple error management
 */
 
 int		safe_call_int_parse(int res, char *message, t_data *data, t_parse *parse);
 void	*safe_call_ptr_parse(void *res, char *message, t_data *data, t_parse *parse);
+void	remove_parse(t_parse *parse);
 
 /*
 **		parse
@@ -236,7 +246,7 @@ void		draw_figure(int x, int y, t_data *data);
 **		find_color.c
 */
 
-t_vec3		curr_color(t_obj *obj, t_vec3 d, t_light *light, t_num min_dist, t_data *data, t_vec3 obj_col);
+t_vec3		curr_color(t_obj *obj, t_trace trace, t_light *light, t_data *data);
 int			vec3_to_color(t_vec3 vec);
 t_vec3		bright_cast2(t_vec3 light_col, t_vec3 l, t_vec3 normal, t_num shine);
 t_vec3		bright_cast(t_vec3 light_col, t_vec3 l, t_vec3 normal, t_num shine);
@@ -262,14 +272,6 @@ void	remove_data(t_data *data);
 */
 
 void		update_screen(t_data *data);
-
-
-
-/*
-**		TODO: need to delete it later
-*/
-
-void			check_data(t_data *data);
 
 /*
 **		texturing_sphere.c
