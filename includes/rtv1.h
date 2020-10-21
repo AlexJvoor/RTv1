@@ -23,6 +23,9 @@
 
 typedef struct	s_obj	t_obj;
 
+#define TRUE	1
+#define FALSE	0
+
 typedef enum	e_type
 {
 	SPHERE,
@@ -31,6 +34,14 @@ typedef enum	e_type
 	CYLINDER,
 	LIGHT
 }				t_type;
+
+typedef struct		s_texture
+{
+	void			*img;
+	signed int		*data;
+	int				x_len;
+	int				y_len;
+}					t_texture;
 
 typedef struct	s_cam
 {
@@ -144,6 +155,8 @@ typedef struct	s_mlx
 
 typedef struct	s_data
 {
+	char		texture_my_sphere;
+	t_texture	sphere_texture;
 	t_light		*light;
 	t_list		*objs;
 	t_cam		cam;
@@ -223,13 +236,11 @@ void		draw_figure(int x, int y, t_data *data);
 **		find_color.c
 */
 
-t_vec3		curr_color(t_obj *obj, t_vec3 d, t_light *light, t_num min_dist, t_data *data);
+t_vec3		curr_color(t_obj *obj, t_vec3 d, t_light *light, t_num min_dist, t_data *data, t_vec3 obj_col);
 int			vec3_to_color(t_vec3 vec);
 t_vec3		bright_cast2(t_vec3 light_col, t_vec3 l, t_vec3 normal, t_num shine);
 t_vec3		bright_cast(t_vec3 light_col, t_vec3 l, t_vec3 normal, t_num shine);
 t_vec3		bright_cast3(t_vec3 light_col, t_vec3 l, t_vec3 normal, t_num shine);
-t_vec3		bright_cast4(t_vec3 light_col, t_vec3 l, t_vec3 normal, t_num shine);
-t_vec3		bright_cast5(t_vec3 light_col, t_vec3 l, t_vec3 normal, t_num shine);
 
 /*
 **		init_data.c
@@ -259,5 +270,12 @@ void		update_screen(t_data *data);
 */
 
 void			check_data(t_data *data);
+
+/*
+**		texturing_sphere.c
+*/
+
+t_vec3		find_textel(t_data *data, t_vec3 d, t_num t, t_obj *obj);
+void		load_text(t_data *data);
 
 # endif

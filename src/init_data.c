@@ -24,4 +24,5 @@ void			init_data(t_data *data)
 	data->find_destination[PLANE] = &plane_cast;
 	data->find_destination[CONE] = &cone_cast;
 	data->find_destination[CYLINDER] = &cylinder_cast;
+	load_text(data);
 }

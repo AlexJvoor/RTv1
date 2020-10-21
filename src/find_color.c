@@ -58,28 +58,6 @@ t_vec3		bright_cast3(t_vec3 light_col, t_vec3 l, t_vec3 normal, t_num shine)
 	return (vec3_mult_num(normal, nl * 0.5));
 }
 
-t_vec3		bright_cast4(t_vec3 light_col, t_vec3 l, t_vec3 normal, t_num shine)
-{
-	t_num		nl;
-
-	nl = vec3_dot(normal, l);
-	return (vec3_mult_num(vec3_mult_num(light_col, pow(nl, (int)shine)), 0.005));
-}
-//
-//t_vec3		bright_cast5(t_vec3 light_col, t_vec3 l, t_vec3 normal, t_num shine)
-//{
-//	t_vec3		b_vec_res;
-//	t_num		nl;
-//	t_vec3		r;
-//	t_num		blick_res;
-//
-//	nl = vec3_dot(normal, l);
-//	r = vec3_plus(vec3_minus(vec3_mult_num(normal, nl), l), vec3_mult_num(normal, nl));
-//	blick_res = vec3_dot(r, normal) / (vec3_len(normal) * vec3_len(r));
-//	b_vec_res = vec3_mult_num(vec3_mult_num(light_col, pow(blick_res, (int)shine)), -1);
-//	return (b_vec_res);
-//}
-
 int			is_shadowed(t_data *data, t_obj *obj, t_vec3 u, t_vec3 *p)
 {
 	t_list		*tmp;
@@ -100,10 +78,6 @@ int			is_shadowed(t_data *data, t_obj *obj, t_vec3 u, t_vec3 *p)
 			continue ;
 		}
 		dist = data->find_destination[(*(t_obj **)tmp->content)->type](data, *(t_obj **)tmp->content, &norm_l, p);
-//		if ((*(t_obj **)(tmp->content))->type == PLANE && obj->type == PLANE)
-//		{
-//			printf("HERE\n");
-//		}
 		if (dist > 0 && dist < dist_l)
 		{
 			return (1);
@@ -113,7 +87,7 @@ int			is_shadowed(t_data *data, t_obj *obj, t_vec3 u, t_vec3 *p)
 	return (0);
 }
 
-t_vec3		curr_color(t_obj *obj, t_vec3 d, t_light *light, t_num min_dist, t_data *data)
+t_vec3		curr_color(t_obj *obj, t_vec3 d, t_light *light, t_num min_dist, t_data *data, t_vec3 obj_col)
 {
 	t_vec3		l;
 	t_vec3		normal;
@@ -127,18 +101,12 @@ t_vec3		curr_color(t_obj *obj, t_vec3 d, t_light *light, t_num min_dist, t_data 
 	normal = obj->find_normal(obj, &d, min_dist,data->cam);
 	if (vec3_dot(d, l) < 0)
 		return (t_vec3){0.0, 0.0, 0.0};
-//		return (obj->color);
-//		printf("Here I am\n");
 	shadowed = (t_vec3){0.0, 0.0, 0.0};
 	if (is_shadowed(data, obj, light->coord, &p))
 	{
 		return ((t_vec3){0.0, 0.0, 0.0});
-//		shadowed = (t_vec3){-0.2 * light->light_pov, -0.2 * light->light_pov, -0.2 * light->light_pov};
 	}
-//	if ((t_obj))
-
 	res = vec3_mult_num(light_cast(light->color, l, normal), light->light_pov);
 	b_vec_res = vec3_mult_num(obj->bright_cast(light->color, l, normal, (int)obj->shine), light->light_pov);
-//	return (vec3_plus(vec3_plus(vec3_mult(obj->color, res), b_vec_res), shadowed));
-	return (vec3_plus(vec3_mult(obj->color, res), b_vec_res));
+	return (vec3_plus(vec3_mult(obj_col, res), b_vec_res));
 }

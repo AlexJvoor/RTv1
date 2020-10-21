@@ -17,6 +17,8 @@ void		change_condition(int kw, t_data *data)
 	t_list		*tmp;
 
 	tmp = data->objs;
+	data->texture_my_sphere = FALSE;
+	(*(t_obj **)(tmp->content))->bright_cast = &bright_cast;
 	while (tmp)
 	{
 		if (kw == 18)
@@ -26,7 +28,7 @@ void		change_condition(int kw, t_data *data)
 		else if (kw == 20)
 			(*(t_obj **)(tmp->content))->bright_cast = &bright_cast3;
 		else if (kw == 21)
-			(*(t_obj **)(tmp->content))->bright_cast = &bright_cast4;
+			data->texture_my_sphere = TRUE;
 		tmp = tmp->next;
 	}
 	update_screen(data);

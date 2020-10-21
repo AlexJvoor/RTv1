@@ -18,14 +18,21 @@ int			final_color(t_data *data, t_obj *obj, t_num min_dist, t_vec3 d)
 	t_light		*tmp;
 	t_vec3		color;
 	t_vec3		p;
+	t_vec3		col_obj;
 
 	tmp = data->light;
 	color.x = 0;
 	color.y = 0;
 	color.z = 0;
+	col_obj = obj->color;
+	if (data->texture_my_sphere == TRUE)
+	{
+		p = vec3_plus(vec3_mult_num(d, min_dist), data->cam.pos);
+		col_obj = find_textel(data, p, min_dist, obj);
+	}
 	while (tmp)
 	{
-		color = vec3_plus(curr_color(obj, d, tmp, min_dist, data), color);
+		color = vec3_plus(curr_color(obj, d, tmp, min_dist, data, col_obj), color);
 		tmp = tmp->next;
 	}
 	return (vec3_to_color(color));
@@ -49,8 +56,6 @@ void		draw_figure(int x, int y, t_data *data)
 	tmp = data->objs;
 	while (tmp)
 	{
-//	    func = data->find_destination[(*(t_obj **)tmp->content)->type];
-//	    dist = func(data, *(t_obj **)tmp->content, &d);
 		dist = data->find_destination[(*(t_obj **)tmp->content)->type](data, *(t_obj **)tmp->content, &d, &data->cam.pos);
 		if (dist > 0.00001 && dist < INFINITY)
 		{
