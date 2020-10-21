@@ -12,12 +12,38 @@
 
 #include "rtv1.h"
 
-void			esc_exit(int kw)
+void		change_condition(int kw, t_data *data)
+{
+	t_list		*tmp;
+
+	tmp = data->objs;
+	data->texture_my_sphere = FALSE;
+	(*(t_obj **)(tmp->content))->bright_cast = &bright_cast;
+	while (tmp)
+	{
+		if (kw == 18)
+			(*(t_obj **)(tmp->content))->bright_cast = &bright_cast;
+		else if (kw == 19)
+			(*(t_obj **)(tmp->content))->bright_cast = &bright_cast2;
+		else if (kw == 20)
+			(*(t_obj **)(tmp->content))->bright_cast = &bright_cast3;
+		else if (kw == 21)
+			data->texture_my_sphere = TRUE;
+		tmp = tmp->next;
+	}
+	update_screen(data);
+	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
+}
+
+int			esc_exit(int kw, t_data *data)
 {
 	if (kw == 53)
 	{
 		exit(0);
 	}
+	if (kw == 18 || kw == 19 || kw == 20 || kw == 21)
+		change_condition(kw, data);
+	return (0);
 }
 
 //t_cam			init_cam()
@@ -41,7 +67,7 @@ void			esc_exit(int kw)
 //	return (plane);
 //}
 
-int				main()
+int				main(int ac, char **av)
 {
 //	int i = 0;
 //	t_plane		*plane = init_plane();
@@ -49,7 +75,9 @@ int				main()
 	t_data		data;
 
 	init_data(&data);
-	parse("maps/1", &data);
+	if (ac < 2)
+		return (0);
+	parse(av[1], &data);//"maps/2"
 //	init_plane();
 
 //	t_list *lst_pln = ft_lstnew((&plane), sizeof(t_plane *));
@@ -57,7 +85,7 @@ int				main()
 //	data.objs->next = ft_lstnew((&plane), sizeof(t_plane *));
 	update_screen(&data);
 	mlx_put_image_to_window(data.mlx.mlx, data.mlx.win, data.mlx.img, 0, 0);
-	mlx_key_hook(data.mlx.win, esc_exit, NULL);
+	mlx_key_hook(data.mlx.win, esc_exit, &data);
 	mlx_loop(data.mlx.mlx);
     return (0);
 }

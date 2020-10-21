@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_light.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hchau <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/21 15:39:20 by hchau             #+#    #+#             */
+/*   Updated: 2020/10/21 15:39:21 by hchau            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
 static void		parse_light_str(t_light *light, t_data *data, t_parse *parse)
@@ -12,7 +24,7 @@ static void		parse_light_str(t_light *light, t_data *data, t_parse *parse)
 			parse_color(str, &light->color, data, parse);
 	}
 	else if (*str == 'l')
-		safe_call_int_parse(parse_float_param("light_pov",
+		safe_call_int_parse(parse_t_num_param("light_pov",
 							&light->light_pov, parse),
 							message, data, parse);
 	else

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hchau <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/21 15:39:29 by hchau             #+#    #+#             */
+/*   Updated: 2020/10/21 15:39:31 by hchau            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
 char		*skip_to(char *check, char *original)
@@ -52,14 +64,14 @@ void		parse_vec3(char *flag_str,
 		message, data, parse);
 	str = safe_call_ptr_parse(skip_to("x", str),
 		message, data, parse);
-	str = safe_call_ptr_parse(parse_float(str, &coordinates->x),
+	str = safe_call_ptr_parse(parse_t_num(str, &coordinates->x),
 		message, data, parse);
 	str = safe_call_ptr_parse(skip_to("y", str),
 		message, data, parse);
-	str = safe_call_ptr_parse(parse_float(str, &coordinates->y),
+	str = safe_call_ptr_parse(parse_t_num(str, &coordinates->y),
 		message, data, parse);
 	str = safe_call_ptr_parse(skip_to("z", str),
 		message, data, parse);
-	str = safe_call_ptr_parse(parse_float(str, &coordinates->z),
+	str = safe_call_ptr_parse(parse_t_num(str, &coordinates->z),
 		message, data, parse);
 }

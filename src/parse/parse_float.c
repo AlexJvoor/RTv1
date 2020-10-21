@@ -1,7 +1,16 @@
-#include "rtv1.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_float.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hchau <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/21 15:39:12 by hchau             #+#    #+#             */
+/*   Updated: 2020/10/21 15:39:14 by hchau            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//TODO: not a trustable function, segfault if there are not integers
-//TODO: Need to rewrite!
+#include "rtv1.h"
 
 char		*get_sign(char *sign, char *str)
 {
@@ -16,7 +25,7 @@ char		*get_sign(char *sign, char *str)
 	return (str);
 }
 
-char		*get_first_num(char *str, float *box)
+char		*get_first_num(char *str, t_num *box)
 {
 	int		i;
 
@@ -33,11 +42,11 @@ char		*get_first_num(char *str, float *box)
 	return (str);
 }
 
-char		*get_second_num(char *str, float *box)
+char		*get_second_num(char *str, t_num *box)
 {
 	int		i;
 	char	flag;
-	float	res;
+	t_num	res;
 
 	i = 0;
 	flag = 1;
@@ -49,14 +58,17 @@ char		*get_second_num(char *str, float *box)
 		return (NULL);
 	str[i] = '\0';
 	res = ft_atoi(str);
-	while (res >= 1)
+	while (*str)
+	{
 		res /= 10.0;
-	*box += res;
-	str += i + flag;
+		str++;
+	}
+	*box += *box < 0 ? -res : res;
+	str += flag;
 	return (str);
 }
 
-char		*parse_float(char *str, float *box)
+char		*parse_t_num(char *str, t_num *box)
 {
 	int		i;
 	char	sign;

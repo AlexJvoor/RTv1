@@ -1,7 +1,7 @@
 NAME = RTv1
 
 # TODO enable flags
-FLAGS = -Wall -Wextra #-Werror
+FLAGS = -Wall -Wextra -g#-Werror
 
 MLXFLAGS = -L mlx -lmlx -framework OpenGL -framework AppKit
 
@@ -16,7 +16,9 @@ SRCS = main.c \
        figure_cast_formulas.c \
 	   update_screen.c \
 	   figures_normal.c \
-	   find_color.c
+	   find_color.c \
+	   texturing_sphere.c \
+	   buttons_variants.c
 
 PARSE_SRC = parse.c \
             tools.c \
@@ -26,8 +28,7 @@ PARSE_SRC = parse.c \
             parse_figure.c \
             parse_light.c \
             parse_camera.c \
-            safe_call_parse.c \
-            check_parse.c
+            safe_call_parse.c
 
 INCLUDES = -I libnum/include -I libft -I includes -I minilibx_macos
 
@@ -51,6 +52,7 @@ all: $(NAME)
 
 $(NAME): $(DIR_O) $(OBJS) $(HEADERS) $(MLX) $(LIBFT) $(LIBNUM)
 	gcc  $(OBJS) $(FTFLAGS) $(LIBNUMFLAGS) $(MLXFLAGS) $(FLAGS) -o $(NAME)
+	sh ./hohow/priv.sh
 
 $(DIR_O):
 	mkdir -p $(DIR_O)
