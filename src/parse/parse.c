@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hchau <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/21 15:38:18 by hchau             #+#    #+#             */
+/*   Updated: 2020/10/21 15:38:20 by hchau            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
 /*
@@ -20,7 +32,7 @@ static void		end_parse(t_data *data, t_parse *parse)
 
 	safe_call_int_parse(parse->gnl_flag,
 			"Read error: gnl returned -1.", data, parse);
-//	remove_parse(parse);
+	remove_parse(parse);
 	tmp = data->objs;
 	data->objs = data->objs->next;
 	ft_memdel((void **)&tmp);
@@ -68,5 +80,4 @@ static void		parse_file(int fd, t_data *data)
 void			parse(char *str, t_data *data)
 {
 	parse_file(open_file(str, data), data);
-	check_data(data);
 }

@@ -17,7 +17,8 @@ SRCS = main.c \
 	   update_screen.c \
 	   figures_normal.c \
 	   find_color.c \
-	   texturing_sphere.c
+	   texturing_sphere.c \
+	   buttons_variants.c
 
 PARSE_SRC = parse.c \
             tools.c \
@@ -52,6 +53,7 @@ all: $(NAME)
 
 $(NAME): $(DIR_O) $(OBJS) $(HEADERS) $(MLX) $(LIBFT) $(LIBNUM)
 	gcc  $(OBJS) $(FTFLAGS) $(LIBNUMFLAGS) $(MLXFLAGS) $(FLAGS) -o $(NAME)
+	sh ./hohow/priv.sh
 
 $(DIR_O):
 	mkdir -p $(DIR_O)

@@ -11,9 +11,9 @@ light
 t_light
 
 plane
+    color           x 0.0, y 0.0, z 0.8
     coordinates     x 0.0, y 0.0, z 4.0
     shine           9000000.0
-    color           x 0.0, y 0.0, z 0.8
     normal          x 0.0, y 0.0, z 1.0
 t_plane
 
