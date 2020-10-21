@@ -28,8 +28,7 @@ PARSE_SRC = parse.c \
             parse_figure.c \
             parse_light.c \
             parse_camera.c \
-            safe_call_parse.c \
-            check_parse.c
+            safe_call_parse.c
 
 INCLUDES = -I libnum/include -I libft -I includes -I minilibx_macos
 
