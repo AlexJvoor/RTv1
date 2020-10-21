@@ -1,14 +1,21 @@
 light
-    coordinates     x 1.60, y 0.0, z 0.0
+    coordinates     x 2.45, y -0.40, z -2.0
     color           x 1.0, y 1.0, z 1.0
-    light_pov       5.0
+    light_pov       3.0
 t_light
 
 light
-    coordinates     x -1.60, y 0.0, z 0.0
+    coordinates     x -2.45, y -0.40, z -2.0
     color           x 1.0, y 1.0, z 1.0
-    light_pov       5.0
+    light_pov       3.0
 t_light
+
+plane
+    coordinates     x 1.0, y 1.0, z 5.0
+    shine           9000000.0
+    color           x 0.0, y 0.0, z 0.8
+    normal          x 0.0, y 0.0, z 1.0
+t_plane
 
 plane
     coordinates     x 0.0, y 0.5, z 0.0
@@ -32,7 +39,7 @@ plane
 t_plane
 
 sphere
-    coordinates     x 0.0, y 0.30, z 2.5
+    coordinates     x 0.0, y 0.35, z 2.2
     shine           100.0
     color           x 1.0, y 0.0, z 0.0
     radius          0.1
@@ -81,8 +88,6 @@ cylinder
     radius          0.1
     color			x 1.0, y 1.0, z 1.0
 t_cylinder
-
-
 
 sphere
     coordinates     x 0.50, y 0.50, z 4.0
