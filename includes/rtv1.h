@@ -277,7 +277,7 @@ void		update_screen(t_data *data);
 **		texturing_sphere.c
 */
 
-t_vec3		find_textel(t_data *data, t_vec3 d, t_num t, t_obj *obj);
+t_vec3		find_textel(t_data *data, t_vec3 d, t_obj *obj);
 void		load_text(t_data *data);
 
 # endif

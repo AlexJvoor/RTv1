@@ -34,8 +34,11 @@ static void		end_parse(t_data *data, t_parse *parse)
 			"Read error: gnl returned -1.", data, parse);
 	remove_parse(parse);
 	tmp = data->objs;
-	data->objs = data->objs->next;
-	ft_memdel((void **)&tmp);
+	if (data->objs)
+	{
+		data->objs = data->objs->next;
+		ft_memdel((void **)&tmp);
+	}
 }
 
 static void		parse_single_object(t_data *data, t_parse *parse)
@@ -68,11 +71,13 @@ static void		parse_file(int fd, t_data *data)
 	parse.fd = fd;
 	data->objs = ft_lstnew(NULL, 0);
 	parse.curr_obj = data->objs;
+	parse.gnl_str = NULL;
 	while ((parse.gnl_flag = get_next_line(fd, &parse.gnl_str)) == 1)
 	{
 		if (*parse.gnl_str)
 			parse_single_object(data, &parse);
-		ft_strdel(&parse.gnl_str);
+		if (parse.gnl_str)
+			ft_strdel(&parse.gnl_str);
 	}
 	end_parse(data, &parse);
 }

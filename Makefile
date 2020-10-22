@@ -52,7 +52,7 @@ all: $(NAME)
 
 $(NAME): $(DIR_O) $(OBJS) $(HEADERS) $(MLX) $(LIBFT) $(LIBNUM)
 	gcc  $(OBJS) $(FTFLAGS) $(LIBNUMFLAGS) $(MLXFLAGS) $(FLAGS) -o $(NAME)
-	sh ./hohow/priv.sh
+# 	sh ./hohow/priv.sh
 
 $(DIR_O):
 	mkdir -p $(DIR_O)
