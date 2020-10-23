@@ -59,5 +59,5 @@ int				main(int ac, char **av)
 	mlx_put_image_to_window(data.mlx.mlx, data.mlx.win, data.mlx.img, 0, 0);
 	mlx_key_hook(data.mlx.win, esc_exit, &data);
 	mlx_loop(data.mlx.mlx);
-    return (0);
+	return (0);
 }

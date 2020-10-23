@@ -15,7 +15,6 @@
 # include "stdio.h"
 # include "math.h"
 # include "mlx.h"
-# include "libnum.h"
 # include "libft.h"
 
 # define WIDTH 1000
@@ -32,6 +31,14 @@
 # define OBJ_COUNT 4
 
 typedef struct s_obj	t_obj;
+typedef double			t_num;
+
+typedef struct		s_vec3
+{
+	t_num			x;
+	t_num			y;
+	t_num			z;
+}					t_vec3;
 
 # define TRUE		1
 # define FALSE		0
@@ -200,6 +207,36 @@ typedef struct		s_trace
 }					t_trace;
 
 /*
+** vec_1.c
+*/
+
+t_vec3				vec3_plus(t_vec3 a, t_vec3 b);
+t_vec3				vec3_minus(t_vec3 a, t_vec3 b);
+t_vec3				vec3_mult(t_vec3 a, t_vec3 b);
+t_vec3				vec3_div(t_vec3 a, t_vec3 b);
+t_vec3				vec3_sqr(t_vec3 a);
+
+/*
+** vec_2.c
+*/
+
+t_vec3				vec3_plus_num(t_vec3 v, t_num n);
+t_vec3				vec3_minus_num(t_vec3 v, t_num n);
+t_vec3				vec3_mult_num(t_vec3 v, t_num n);
+t_vec3				vec3_div_num(t_vec3 v, t_num n);
+t_num				vec3_sum(t_vec3 v);
+
+/*
+** vec_3.c
+*/
+
+t_vec3				vec3_invert(t_vec3 vector);
+t_vec3				vec3_normalize(t_vec3 vector);
+t_num				vec3_dot(t_vec3 a, t_vec3 b);
+t_vec3				vec3_cross(t_vec3 a, t_vec3 b);
+t_num				vec3_len(t_vec3 a);
+
+/*
 **		simple error management
 */
 
@@ -307,7 +344,7 @@ void				update_screen(t_data *data);
 **		texturing_sphere.c
 */
 
-t_vec3				find_textel(t_data *data, t_vec3 d, t_num t, t_obj *obj);
+t_vec3				find_textel(t_data *data, t_vec3 d, t_obj *obj);
 void				load_text(t_data *data);
 
 #endif

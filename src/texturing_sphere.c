@@ -73,31 +73,31 @@ t_vec3		find_textel_plane(t_data *data, t_vec3 d, t_obj *obj)
 	return (from_textel_to_vec3(col_res));
 }
 
-//t_vec3		find_textel(t_data *data, t_vec3 d, t_obj *obj)
-//{
-//	float		u;
-//	float		v;
-//	int			col_res;
-//	int			u_res;
-//	int			v_res;
-//
-//	if (obj->type == PLANE)
-//		return (find_textel_plane(data, d, obj));
-//	if (obj->type != SPHERE)
-//		return (obj->color);
-//	d = vec3_div_num(vec3_minus(d,
-//			((t_sphere *)obj)->coords), ((t_sphere *)obj)->rad);
-//	u = 0.5 + atan2(d.z, d.x) / (M_PI * 2.0);
-//	v = 0.5 + asin(d.y) / M_PI;
-//	u_res = (data->sphere_texture.x_len * u * 6);
-//	v_res = (data->sphere_texture.y_len * v * 3);
-//	if (u_res < 0)
-//		u_res = 0;
-//	v_res %= data->sphere_texture.y_len;
-//	u_res %= data->sphere_texture.x_len;
-//	if (v_res < 0)
-//		v_res = 0;
-//	col_res = (data->sphere_texture.data[u_res
-//				+ v_res * data->sphere_texture.x_len]);
-//	return (from_textel_to_vec3(col_res));
-//}
+t_vec3		find_textel(t_data *data, t_vec3 d, t_obj *obj)
+{
+	float		u;
+	float		v;
+	int			col_res;
+	int			u_res;
+	int			v_res;
+
+	if (obj->type == PLANE)
+		return (find_textel_plane(data, d, obj));
+	if (obj->type != SPHERE)
+		return (obj->color);
+	d = vec3_div_num(vec3_minus(d,
+			((t_sphere *)obj)->coords), ((t_sphere *)obj)->rad);
+	u = 0.5 + atan2(d.z, d.x) / (M_PI * 2.0);
+	v = 0.5 + asin(d.y) / M_PI;
+	u_res = (data->sphere_texture.x_len * u * 6);
+	v_res = (data->sphere_texture.y_len * v * 3);
+	if (u_res < 0)
+		u_res = 0;
+	v_res %= data->sphere_texture.y_len;
+	u_res %= data->sphere_texture.x_len;
+	if (v_res < 0)
+		v_res = 0;
+	col_res = (data->sphere_texture.data[u_res
+				+ v_res * data->sphere_texture.x_len]);
+	return (from_textel_to_vec3(col_res));
+}

@@ -61,8 +61,8 @@ int			final_color(t_data *data, t_obj *obj, t_num min_dist, t_vec3 d)
 	color.x = 0;
 	color.y = 0;
 	color.z = 0;
-//	if (data->texture_my_sphere == TRUE)
-//		trace.obj_col = find_textel(data, trace.p, obj);//<--wrong amount of args in func call
+	if (data->texture_my_sphere == TRUE)
+		trace.obj_col = find_textel(data, trace.p, obj);
 	while (tmp)
 	{
 		color = vec3_plus(curr_color(obj, trace, tmp, data), color);
