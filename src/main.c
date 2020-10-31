@@ -54,7 +54,6 @@ int				main(int ac, char **av)
 	if (ac < 2)
 		return (0);
 	parse(av[1], &data);
-	printf("%f, %f\n", cos(data.cam.dir.z), -sin(data.cam.dir.z));
 	update_screen(&data);
 	mlx_put_image_to_window(data.mlx.mlx, data.mlx.win, data.mlx.img, 0, 0);
 	mlx_key_hook(data.mlx.win, esc_exit, &data);

@@ -52,8 +52,6 @@ int			final_color(t_data *data, t_obj *obj, t_num min_dist, t_vec3 d)
 {
 	t_light		*tmp;
 	t_vec3		color;
-	t_vec3		p;
-	t_vec3		col_obj;
 	t_trace		trace;
 
 	trace = get_trace(d, min_dist, data, obj);
@@ -84,7 +82,7 @@ void		draw_figure(int x, int y, t_data *data)
 	tmp = data->objs;
 	while (tmp)
 	{
-		dist = data->find_destination[(*(t_obj **)tmp->content)->type](data,
+		dist = data->find_destination[(*(t_obj **)tmp->content)->type](
 				*(t_obj **)tmp->content, &d, &data->cam.pos);
 		if (dist > 0.00001 && dist < INFINITY && dist < min_dist)
 		{

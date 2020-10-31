@@ -1,7 +1,6 @@
 NAME = RTv1
 
-# TODO enable flags
-FLAGS = -Wall -Wextra -g#-Werror
+FLAGS = -Wall -Wextra -g -Werror
 
 MLXFLAGS = -L mlx -lmlx -framework OpenGL -framework AppKit
 

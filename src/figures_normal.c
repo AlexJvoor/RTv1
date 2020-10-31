@@ -22,6 +22,9 @@ t_vec3		sphere_normal(t_obj *obj, t_vec3 *d, t_num min_dist, t_cam cam)
 
 t_vec3		plane_normal(t_obj *obj, t_vec3 *d, t_num min_dist, t_cam cam)
 {
+	*d = *d;
+	min_dist = 0;
+	cam.pos.x = 0;
 	return (((t_plane *)obj)->norm);
 }
 

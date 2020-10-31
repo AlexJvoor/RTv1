@@ -183,7 +183,7 @@ typedef struct		s_data
 	t_light			*light;
 	t_list			*objs;
 	t_cam			cam;
-	t_num			(*find_destination[OBJ_COUNT])(struct s_data *, t_obj *,
+	t_num			(*find_destination[OBJ_COUNT])(t_obj *,
 			t_vec3 *, t_vec3 *);
 	t_mlx			mlx;
 }					t_data;
@@ -280,11 +280,10 @@ int					parse_color(char *str, t_vec3 *color,
 **		figure_cast_formulas.c
 */
 
-t_num				sphere_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *p);
-t_num				cone_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *p);
-t_num				plane_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *p);
-t_num				cylinder_cast(t_data *data,
-						t_obj *obj, t_vec3 *d, t_vec3 *p);
+t_num				sphere_cast(t_obj *obj, t_vec3 *d, t_vec3 *p);
+t_num				cone_cast(t_obj *obj, t_vec3 *d, t_vec3 *p);
+t_num				plane_cast(t_obj *obj, t_vec3 *d, t_vec3 *p);
+t_num				cylinder_cast(t_obj *obj, t_vec3 *d, t_vec3 *p);
 
 /*
 **		figure_normals.c

@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-t_num			sphere_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *cam)
+t_num			sphere_cast(t_obj *obj, t_vec3 *d, t_vec3 *cam)
 {
 	t_num		n_ar[7];
 	t_vec3		c;
@@ -32,7 +32,7 @@ t_num			sphere_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *cam)
 	return (n_ar[5] < n_ar[6] ? n_ar[5] : n_ar[6]);
 }
 
-t_num			cone_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *cam)
+t_num			cone_cast(t_obj *obj, t_vec3 *d, t_vec3 *cam)
 {
 	t_vec3		oc;
 	t_num		n_ar[9];
@@ -58,7 +58,7 @@ t_num			cone_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *cam)
 	return (INFINITY);
 }
 
-t_num			plane_cast(t_data *data, t_obj *obj, t_vec3 *d_old, t_vec3 *cam)
+t_num			plane_cast(t_obj *obj, t_vec3 *d_old, t_vec3 *cam)
 {
 	t_num		t;
 	t_num		vx;
@@ -72,7 +72,7 @@ t_num			plane_cast(t_data *data, t_obj *obj, t_vec3 *d_old, t_vec3 *cam)
 	return (t);
 }
 
-t_num			cylinder_cast(t_data *data, t_obj *obj, t_vec3 *d, t_vec3 *cam)
+t_num			cylinder_cast(t_obj *obj, t_vec3 *d, t_vec3 *cam)
 {
 	t_vec3		oc;
 	t_vec3		v;
