@@ -50,9 +50,12 @@ int				main(int ac, char **av)
 {
 	t_data		data;
 
-	init_data(&data);
 	if (ac < 2)
+	{
+		ft_putendl("\033[38;2;200;0;30mOh my! No arguments in RTv1!\033[38;2;0m");
 		return (0);
+	}
+	init_data(&data);
 	parse(av[1], &data);
 	update_screen(&data);
 	mlx_put_image_to_window(data.mlx.mlx, data.mlx.win, data.mlx.img, 0, 0);
