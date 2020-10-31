@@ -1,3 +1,9 @@
+camera
+    position        x 0.0, y 0.0, z 0.0
+    direction       x 0.0, y 0.0, z 0.0
+    deg             x 0.0, y 0.0, z 0.0
+t_camera
+
 light
     coordinates     x 0.80, y 0.0, z 0.0
     color           x 0.0, y 1.0, z 0.0
@@ -19,15 +25,8 @@ t_light
 light
     coordinates     x -0.0, y -0.0, z 1.0
     color           x 1.0, y 1.0, z 1.0
-    light_pov       1.0
+    light_pov       0.33
 t_light
-
-plane
-    coordinates     x 0.0, y 0.0, z 0.10
-    shine           100.0
-    color           x 0.8, y 0.0, z 0.8
-    normal          x 0.8, y 0.0, z 0.0
-t_plane
 
 sphere
     coordinates     x 0.0, y 0.0, z 2.0
@@ -35,39 +34,3 @@ sphere
     color           x 1.0, y 0.0, z 0.0
     radius          0.5
 t_sphere
-
-cone
-    coordinates     x 1.0, y 1.0, z 1.0
-    shine           100.0
-    dir_vec         x 11.0, y 12.0, z 13.0
-    tangent         0.8
-    color			x 0.7, y 0.5, z 1.0
-t_cone
-
-cylinder
-    coordinates     x 0.0, y 0.0, z 1.4
-    shine           100.0
-    dir_vec         x 2.0, y 10.0, z 4.5
-    radius          0.1
-    color			x 1.0, y 1.0, z 0.0
-t_cylinder
-
-sphere
-    coordinates     x 0.6, y 0.0, z 2.0
-    shine           100.0
-    color           x 0.0, y 1.0, z 0.0
-    radius          0.2
-t_sphere
-
-sphere
-    coordinates     x 0.0, y 0.30, z 3.0
-    shine           100.0
-    color           x 0.0, y 0.0, z 1.0
-    radius          1.0
-t_sphere
-
-camera
-    position        x 0.0, y 0.0, z 0.0
-    direction       x 1.0, y 0.0, z 0.0
-    deg             x 0.0, y 0.0, z 1.0
-t_camera

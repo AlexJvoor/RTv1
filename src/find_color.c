@@ -58,8 +58,8 @@ int				is_shadowed(t_data *data, t_obj *obj, t_vec3 u, t_vec3 *p)
 			tmp = tmp->next;
 			continue ;
 		}
-		dist = data->find_destination[(*(t_obj **)tmp->content)->type](data,
-			*(t_obj **)tmp->content, &norm_l, p);
+		dist = data->find_destination[(*(t_obj **)tmp->content)->type](
+				*(t_obj **)tmp->content, &norm_l, p);
 		if (dist > 0 && dist < dist_l)
 			return (1);
 		tmp = tmp->next;

@@ -16,7 +16,8 @@
 
 void	remove_parse(t_parse *parse)
 {
-	ft_strdel(&parse->gnl_str);
+	if (parse->gnl_str)
+		ft_strdel(&parse->gnl_str);
 }
 
 int		safe_call_int_parse(int res, char *message,
